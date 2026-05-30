@@ -1,0 +1,4 @@
+{"env_step": 25000, "grad_step": 5001, "mean": 73.66666666666667, "max": 99, "min": 40, "scores": [40, 82, 99]}
+{"env_step": 50000, "grad_step": 11251, "mean": 53.0, "max": 72, "min": 43, "scores": [72, 44, 43]}
+{"env_step": 75000, "grad_step": 17501, "mean": 42.666666666666664, "max": 46, "min": 36, "scores": [36, 46, 46]}
+{"env_step": 25000, "grad_step": 5001, "mean": 51.666666666666664, "max": 71, "min": 39, "scores": [71, 45, 39]}
