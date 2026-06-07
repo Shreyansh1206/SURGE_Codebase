@@ -84,6 +84,23 @@ JUMP_COST    =  0.01  # small penalty per jump — must stay well below PASS_BON
 PASS_BONUS   =  1.0   # reward for an obstacle sliding past the dino — must clearly
                       # exceed JUMP_COST so a successful jump is net-positive
 
+# --- Opt-in duck-finetune reward shaping ----------------------------------
+# These are ONLY applied when DinoEnv(duck_shaping=True). With the default
+# (duck_shaping=False) the reward computed in step() is byte-for-byte identical
+# to the original, so the shipped model's training/eval path is unchanged.
+DUCK_PASS_BONUS   = 0.5    # extra reward when an obstacle passes while the dino is
+                          # DUCKING. Ducking past a bird therefore pays
+                          # PASS_BONUS + DUCK_PASS_BONUS = 1.5 — strictly better than
+                          # running under it (1.0) or jumping into it (death, -10).
+BIRD_JUMP_PENALTY = 0.5    # penalty for JUMPING while a mid/high pterodactyl is in the
+                          # danger zone (a jump rises straight into a high bird and
+                          # kills you). Kept below PASS_BONUS so normal jumps stay net
+                          # positive.
+BIRD_DUCK_YMAX    = 80.0   # raw pterodactyl yPos at/below which ducking (not jumping)
+                          # is the correct response. Mid bird yPos=75 and high bird
+                          # yPos=50 qualify; the low bird (yPos=100) and all cacti do
+                          # NOT, so those still want a jump.
+
 # Obstacle-distance normalisation:
 #   raw o1.xPos is the obstacle's screen x (0..600). The dino sits at x≈44.
 #   The "must decide now" window is roughly 0..200 px ahead of the dino —
@@ -103,7 +120,11 @@ class DinoEnv:
                  game_url: str = None,
                  window_size: tuple = (700, 320),
                  window_position: tuple = (0, 0),
-                 env_id: int = 0):
+                 env_id: int = 0,
+                 curriculum_prob: float = 0.0,
+                 start_speed_range: tuple = None,
+                 start_score: float = 0.0,
+                 duck_shaping: bool = False):
         """
         frames_per_step : game frames that elapse per agent step (action repeat).
                           At 60 Hz, 4 frames = 67 ms of game time per step.
@@ -113,8 +134,24 @@ class DinoEnv:
                           1920x1080 monitor (2x2 grid).
         window_position : (x, y) screen pixel of top-left corner.
         env_id          : tag for log prints — useful when running many envs.
+
+        --- Opt-in duck-finetune knobs (all default to the original behaviour) ---
+        curriculum_prob   : probability that reset() jump-starts the episode into
+                            pterodactyl territory (birds need speed >= 8.5). 0.0
+                            disables the curriculum entirely (default).
+        start_speed_range : (lo, hi) game-speed range sampled on a curriculum start.
+        start_score       : in-game score to seed on a curriculum start (the game's
+                            distanceRan is set to score / COEFFICIENT so the score
+                            readout is consistent). 0 leaves distance untouched.
+        duck_shaping      : when True, add duck-targeted reward shaping in step()
+                            (DUCK_PASS_BONUS / BIRD_JUMP_PENALTY). Default False =>
+                            original reward.
         """
         self.env_id = env_id
+        self.curriculum_prob   = curriculum_prob
+        self.start_speed_range = start_speed_range
+        self.start_score       = start_score
+        self.duck_shaping      = duck_shaping
         opts = Options()
         opts.add_argument("--mute-audio")
         opts.add_argument("--disable-infobars")
@@ -210,7 +247,8 @@ class DinoEnv:
     # ---------------------------------------------------------------- state
 
     def _read_state(self):
-        return self.driver.execute_script("""
+        try:
+            return self.driver.execute_script("""
         const r = Runner.instance_;
         if (!r) return null;
         const t   = r.tRex;
@@ -234,8 +272,45 @@ class DinoEnv:
             ducking : t.ducking  ? 1 : 0,
             o1      : pack(o1),
             o2      : pack(o2),
+            o1type  : o1 ? o1.typeConfig.type : '',
+            o2type  : o2 ? o2.typeConfig.type : '',
         };
         """)
+        except Exception:
+            return None
+
+    def _read_state_retry(self, attempts=8, pause=0.03):
+        """Poll Runner.instance_ — avoids false terminal steps after restart."""
+        for i in range(attempts):
+            s = self._read_state()
+            if s is not None:
+                return s
+            if i + 1 < attempts:
+                time.sleep(pause)
+        return None
+
+    def _wait_until_ready(self, timeout=2.5):
+        """Block until the game is running and not crashed (post-reset)."""
+        end = time.time() + timeout
+        last = None
+        while time.time() < end:
+            s = self._read_state()
+            if s is not None:
+                last = s
+                if not s["crashed"] and s.get("playing"):
+                    return s
+            time.sleep(0.05)
+        return last
+
+    def _is_duckable_bird_near(self, s):
+        """True if the nearest obstacle is a mid/high pterodactyl inside the
+        danger zone — i.e. a bird you must DUCK (or run) under, not jump into.
+        Used only by the opt-in duck_shaping reward."""
+        o1 = s["o1"]
+        x, ypos = float(o1[0]), float(o1[1])
+        return (s.get("o1type", "") == "PTERODACTYL"
+                and ypos <= BIRD_DUCK_YMAX
+                and DINO_X < x <= DINO_X + DANGER_RANGE)
 
     def _featurize(self, s):
         o1, o2 = s["o1"], s["o2"]
@@ -281,19 +356,48 @@ class DinoEnv:
 
     def reset(self):
         self._release_down()
-        self.driver.execute_script(
-            "const r = Runner.instance_;"
-            "if (r.crashed) { r.restart(); }"
-            "else if (!r.playing) {"
-            "  " + _JS_SPACE_DOWN +
-            "  " + _JS_SPACE_UP +
-            "}"
-        )
-        # Wait for the game to actually start running again.
-        time.sleep(0.4)
+        s = None
+        for attempt in range(3):
+            self.driver.execute_script(
+                "const r = Runner.instance_;"
+                "if (!r) return;"
+                "if (r.crashed) { r.restart(); }"
+                "else if (!r.playing) {"
+                "  " + _JS_SPACE_DOWN +
+                "  " + _JS_SPACE_UP +
+                "}"
+            )
+            s = self._wait_until_ready(timeout=2.0)
+            if s is not None and not s["crashed"] and s.get("playing"):
+                break
+            time.sleep(0.15 * (attempt + 1))
+
+        # Opt-in speed curriculum: with probability curriculum_prob, jump-start
+        # this episode into pterodactyl territory so the agent actually sees
+        # birds (which only spawn once game speed reaches 8.5). Obstacle
+        # generation keys off currentSpeed, so setting it is enough; distanceRan
+        # is set too only to keep the score readout consistent. With the default
+        # curriculum_prob=0 this whole block is skipped and reset() is unchanged.
+        if (self.curriculum_prob > 0.0
+                and self.start_speed_range is not None
+                and np.random.random() < self.curriculum_prob):
+            lo, hi = self.start_speed_range
+            speed = float(np.random.uniform(lo, hi))
+            self.driver.execute_script(
+                "const r = Runner.instance_;"
+                "if (r) {"
+                "  r.setSpeed(arguments[0]);"
+                "  if (arguments[1] > 0) {"
+                "    r.distanceRan = arguments[1] / r.distanceMeter.config.COEFFICIENT;"
+                "  }"
+                "}",
+                speed, float(self.start_score),
+            )
+            time.sleep(0.05)
 
         self.frame_buffer.clear()
-        s = self._read_state()
+        if s is None:
+            s = self._read_state_retry()
         self.prev_score = int(s["score"]) if s else 0
         self._prev_o1_x = float(s["o1"][0]) if s else None
         if s is not None:
@@ -311,10 +415,13 @@ class DinoEnv:
         if self.step_pause > 0:
             time.sleep(self.step_pause)
 
-        # 4. read state
-        s = self._read_state()
+        # 4. read state (retry — Runner.instance_ can be briefly null after restart)
+        s = self._read_state_retry()
         if s is None:
-            return self._stacked_obs(), DEATH_REWARD, True, {"score": self.prev_score}
+            return self._stacked_obs(), DEATH_REWARD, True, {
+                "score": self.prev_score,
+                "read_state_failed": True,
+            }
 
         self.frame_buffer.append(self._featurize(s))
         obs   = self._stacked_obs()
@@ -338,13 +445,36 @@ class DinoEnv:
         )
         self._prev_o1_x = cur_o1_x
 
-        reward = DEATH_REWARD if done else (
-            0.01 * max(0, score - self.prev_score)
-            - (JUMP_COST if action == 1 else 0.0)
-            + (PASS_BONUS if passed else 0.0)
-        )
+        if done:
+            reward = DEATH_REWARD
+        else:
+            reward = (
+                0.01 * max(0, score - self.prev_score)
+                - (JUMP_COST if action == 1 else 0.0)
+                + (PASS_BONUS if passed else 0.0)
+            )
+            # Opt-in duck shaping (no-op unless duck_shaping=True).
+            if self.duck_shaping:
+                if passed and bool(s["ducking"]):
+                    reward += DUCK_PASS_BONUS          # rewarded the correct bird response
+                if action == 1 and self._is_duckable_bird_near(s):
+                    reward -= BIRD_JUMP_PENALTY        # discouraged jumping into a high bird
         self.prev_score = score
-        return obs, reward, done, {"score": score, "speed": s["speed"]}
+
+        info = {
+            "score": score,
+            "speed": s["speed"],
+            "o1_type": s.get("o1type", ""),
+            "o2_type": s.get("o2type", ""),
+            "o1_x": cur_o1_x,
+            "o1_y": float(s["o1"][1]),
+            "o2_x": float(s["o2"][0]),
+            "o2_y": float(s["o2"][1]),
+        }
+        if done:
+            # Tag the obstacle we most likely died on, for death-cause analysis.
+            info["death_obstacle"] = s.get("o1type", "")
+        return obs, reward, done, info
 
     def close(self):
         try:

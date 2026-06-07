@@ -1,0 +1,77 @@
+[2026-05-31 23:36:02] === overnight pipeline start ===
+[2026-05-31 23:36:02] RUN conda run --no-capture-output -n dinoGame python -u bc_warmup.py --headless --episodes 45 --epochs 30 --curriculum-prob 0.5 --save checkpoints_scratch_duck/bc_init.pt
+[2026-05-31 23:38:00] RESTARTED: ~8h budget | 30 BC eps | 140 PPO updates | 50-ep benchmark | best.pt = mean score
+[2026-05-31 23:38:30] === pipeline start (~8h budget) ===
+[2026-05-31 23:38:30] RUN conda run --no-capture-output -n dinoGame python -u bc_warmup.py --headless --episodes 30 --epochs 25 --curriculum-prob 0.5 --save checkpoints_scratch_duck/bc_init.pt
+[2026-06-01 00:22:31] BC warmup done
+[2026-06-01 00:22:31] RUN conda run --no-capture-output -n dinoGame python -u train.py --save-dir checkpoints_scratch_duck --resume checkpoints_scratch_duck/bc_init.pt --headless --n-envs 4 --rollout 256 --updates 140 --curriculum-prob 0.35 --entropy 0.01 --lr 2e-4 --save-every 10
+[2026-06-01 01:23:51] PPO train done
+[2026-06-01 01:23:51] RUN conda run --no-capture-output -n dinoGame python -u benchmarking/benchmark.py --ckpt checkpoints_scratch_duck/best.pt --episodes 50 --headless --out-dir benchmarking/results/scratch_duck_final
+[2026-06-01 02:08:45] benchmark done -> benchmarking/results/scratch_duck_final
+[2026-06-01 02:08:45] === pipeline finished in 2.50 h ===
+[2026-06-01 02:08:45] best (mean): checkpoints_scratch_duck/best.pt | peak: checkpoints_scratch_duck/best_max.pt | log: checkpoints_scratch_duck\overnight.log
+[2026-06-01 02:09:56] pipeline already complete — nothing to do
+[2026-06-01 02:15:58] pipeline already complete — nothing to do
+[2026-06-01 02:22:00] pipeline already complete — nothing to do
+[2026-06-01 02:28:02] pipeline already complete — nothing to do
+[2026-06-01 02:34:05] pipeline already complete — nothing to do
+[2026-06-01 02:40:07] pipeline already complete — nothing to do
+[2026-06-01 02:46:09] pipeline already complete — nothing to do
+[2026-06-01 02:52:11] pipeline already complete — nothing to do
+[2026-06-01 02:58:13] pipeline already complete — nothing to do
+[2026-06-01 03:04:15] pipeline already complete — nothing to do
+[2026-06-01 03:10:18] pipeline already complete — nothing to do
+[2026-06-01 03:16:20] pipeline already complete — nothing to do
+[2026-06-01 03:22:22] pipeline already complete — nothing to do
+[2026-06-01 03:28:24] pipeline already complete — nothing to do
+[2026-06-01 03:34:26] pipeline already complete — nothing to do
+[2026-06-01 03:40:29] pipeline already complete — nothing to do
+[2026-06-01 03:46:31] pipeline already complete — nothing to do
+[2026-06-01 03:52:33] pipeline already complete — nothing to do
+[2026-06-01 03:58:35] pipeline already complete — nothing to do
+[2026-06-01 04:04:38] pipeline already complete — nothing to do
+[2026-06-01 04:10:40] pipeline already complete — nothing to do
+[2026-06-01 04:16:42] pipeline already complete — nothing to do
+[2026-06-01 04:22:44] pipeline already complete — nothing to do
+[2026-06-01 04:28:46] pipeline already complete — nothing to do
+[2026-06-01 04:34:49] pipeline already complete — nothing to do
+[2026-06-01 04:40:51] pipeline already complete — nothing to do
+[2026-06-01 04:46:53] pipeline already complete — nothing to do
+[2026-06-01 04:52:55] pipeline already complete — nothing to do
+[2026-06-01 04:58:58] pipeline already complete — nothing to do
+[2026-06-01 05:05:00] pipeline already complete — nothing to do
+[2026-06-01 05:11:02] pipeline already complete — nothing to do
+[2026-06-01 05:17:04] pipeline already complete — nothing to do
+[2026-06-01 05:23:06] pipeline already complete — nothing to do
+[2026-06-01 05:29:09] pipeline already complete — nothing to do
+[2026-06-01 05:35:11] pipeline already complete — nothing to do
+[2026-06-01 05:41:13] pipeline already complete — nothing to do
+[2026-06-01 05:47:15] pipeline already complete — nothing to do
+[2026-06-01 05:53:17] pipeline already complete — nothing to do
+[2026-06-01 05:59:20] pipeline already complete — nothing to do
+[2026-06-01 06:05:22] pipeline already complete — nothing to do
+[2026-06-01 06:11:24] pipeline already complete — nothing to do
+[2026-06-01 06:17:27] pipeline already complete — nothing to do
+[2026-06-01 06:23:29] pipeline already complete — nothing to do
+[2026-06-01 06:29:31] pipeline already complete — nothing to do
+[2026-06-01 06:35:33] pipeline already complete — nothing to do
+[2026-06-01 06:41:36] pipeline already complete — nothing to do
+[2026-06-01 06:47:38] pipeline already complete — nothing to do
+[2026-06-01 06:53:40] pipeline already complete — nothing to do
+[2026-06-01 06:59:42] pipeline already complete — nothing to do
+[2026-06-01 07:05:44] pipeline already complete — nothing to do
+[2026-06-01 07:11:47] pipeline already complete — nothing to do
+[2026-06-01 07:17:49] pipeline already complete — nothing to do
+[2026-06-01 07:23:51] pipeline already complete — nothing to do
+[2026-06-01 07:29:54] pipeline already complete — nothing to do
+[2026-06-01 07:35:56] pipeline already complete — nothing to do
+[2026-06-01 07:41:58] pipeline already complete — nothing to do
+[2026-06-01 07:48:01] pipeline already complete — nothing to do
+[2026-06-01 07:54:03] pipeline already complete — nothing to do
+[2026-06-01 08:00:05] pipeline already complete — nothing to do
+[2026-06-01 08:06:07] pipeline already complete — nothing to do
+[2026-06-01 08:12:09] pipeline already complete — nothing to do
+[2026-06-01 08:18:12] pipeline already complete — nothing to do
+[2026-06-01 08:24:14] pipeline already complete — nothing to do
+[2026-06-01 08:30:16] pipeline already complete — nothing to do
+[2026-06-01 08:36:19] pipeline already complete — nothing to do

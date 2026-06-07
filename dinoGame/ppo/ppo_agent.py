@@ -126,7 +126,8 @@ class PPO:
         self.max_grad_norm = max_grad_norm
 
     def update(self, buf: RolloutBuffer, last_values: np.ndarray,
-               gamma: float = 0.99, lam: float = 0.95):
+               gamma: float = 0.99, lam: float = 0.95,
+               target_kl: float = 0.015):
         obs, actions, old_logp, rewards, values, dones = buf.stack()  # (T,N,...)
         adv, returns = compute_gae_vec(rewards, values, dones, last_values,
                                        gamma=gamma, lam=lam)
@@ -160,7 +161,6 @@ class PPO:
                  "kl": 0.0, "grad_norm": 0.0}
         n_updates = 0
 
-        target_kl = 0.015
         early_stop = False
 
         for epoch in range(self.epochs):

@@ -5,6 +5,12 @@ Usage:
     python train.py
     python train.py --n-envs 4 --updates 300 --rollout 256
     python train.py --resume checkpoints/latest.pt --updates 500
+
+Scratch retrain with duck-aware BC + bird curriculum:
+    python bc_warmup.py --headless --save checkpoints_scratch_duck/bc_init.pt
+    python train.py --save-dir checkpoints_scratch_duck \\
+        --resume checkpoints_scratch_duck/bc_init.pt --headless \\
+        --curriculum-prob 0.35 --updates 300
 """
 
 import argparse
@@ -86,6 +92,14 @@ def main():
     p.add_argument("--save-every", type=int, default=10)
     p.add_argument("--resume", type=str, default=None)
     p.add_argument("--seed", type=int, default=0)
+    # Bird-territory curriculum (same knobs as dino_env / bc_warmup)
+    p.add_argument("--curriculum-prob", type=float, default=0.0,
+                   help="Fraction of episode resets that jump-start at bird speed "
+                        "(use ~0.3–0.4 after duck-aware BC). 0 = original behaviour.")
+    p.add_argument("--start-speed-min", type=float, default=8.5)
+    p.add_argument("--start-speed-max", type=float, default=9.5)
+    p.add_argument("--start-score", type=float, default=450.0,
+                   help="Score seeded on curriculum resets (birds spawn ~450+).")
     args = p.parse_args()
 
     os.makedirs(args.save_dir, exist_ok=True)
@@ -93,15 +107,19 @@ def main():
     torch.manual_seed(args.seed)
 
     print(f"[train] launching {args.n_envs} parallel Dino envs "
-          f"({args.window_w}x{args.window_h}, {args.grid_cols} cols)")
+          f"({args.window_w}x{args.window_h}, {args.grid_cols} cols) | "
+          f"curriculum_prob={args.curriculum_prob}")
     vec_env = VecDinoEnv(
-        n_envs        = args.n_envs,
-        window_size   = (args.window_w, args.window_h),
-        grid_cols     = args.grid_cols,
+        n_envs            = args.n_envs,
+        window_size       = (args.window_w, args.window_h),
+        grid_cols         = args.grid_cols,
         chromedriver_path = args.chromedriver,
-        step_pause    = args.step_pause,
-        game_url      = args.game_url,
-        headless      = args.headless,
+        step_pause        = args.step_pause,
+        game_url          = args.game_url,
+        headless          = args.headless,
+        curriculum_prob   = args.curriculum_prob,
+        start_speed_range = (args.start_speed_min, args.start_speed_max),
+        start_score       = args.start_score,
     )
     ppo = PPO(OBS_DIM, N_ACTIONS,
               lr=args.lr, clip_eps=args.clip, epochs=args.epochs,
@@ -112,7 +130,8 @@ def main():
 
     buf = RolloutBuffer(args.n_envs)
     log_path  = os.path.join(args.save_dir, "train_log.jsonl")
-    best_score = -1
+    best_mean_score = -1.0
+    best_max_score  = -1
     t0 = time.time()
 
     try:
@@ -164,9 +183,16 @@ def main():
             if update % args.save_every == 0:
                 ppo.save(os.path.join(args.save_dir, f"ppo_upd{update}.pt"))
                 ppo.save(os.path.join(args.save_dir, "latest.pt"))
-            if max_sc > best_score:
-                best_score = max_sc
+
+            # Promote best.pt on rollout mean score (stable); also track peak max.
+            if ep_sc and mean_sc == mean_sc and mean_sc > best_mean_score:
+                best_mean_score = mean_sc
                 ppo.save(os.path.join(args.save_dir, "best.pt"))
+                print(f"        [ckpt] new best mean score {best_mean_score:.1f} -> "
+                      f"saved {args.save_dir}/best.pt")
+            if max_sc > best_max_score:
+                best_max_score = max_sc
+                ppo.save(os.path.join(args.save_dir, "best_max.pt"))
 
     except KeyboardInterrupt:
         print("\n[interrupt] saving and exiting")

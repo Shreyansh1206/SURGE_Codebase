@@ -1,0 +1,904 @@
+{
+  "run_timestamp": "20260601_114234",
+  "checkpoint": "checkpoints_scratch_duck/best_duck.pt",
+  "seed": 42,
+  "model_params": 23300,
+  "device": "cpu",
+  "deterministic": {
+    "n_episodes": 30,
+    "aggregate": {
+      "score_stats": {
+        "n": 30,
+        "mean": 871.8,
+        "std": 1131.096977457633,
+        "sem": 206.50910975981935,
+        "min": 41.0,
+        "p1": 41.29,
+        "p5": 43.35,
+        "p10": 61.2,
+        "p25": 94.0,
+        "median": 380.5,
+        "p75": 1252.0,
+        "p90": 2211.800000000001,
+        "p95": 2966.749999999999,
+        "p99": 4439.050000000001,
+        "max": 4977.0,
+        "iqr": 1158.0,
+        "ci95_lo": 467.04214487075404,
+        "ci95_hi": 1276.5578551292458,
+        "cv": 1.297427136335895,
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "return_stats": {
+        "n": 30,
+        "mean": -1.69666666666669,
+        "std": 10.308380699396007,
+        "sem": 1.8820442134700246,
+        "min": -9.6,
+        "p1": -9.5971,
+        "p5": -9.5765,
+        "p10": -9.434,
+        "p25": -9.18,
+        "median": -5.600000000000019,
+        "p75": 2.464999999999786,
+        "p90": 11.684999999999885,
+        "p95": 17.11250000000007,
+        "p99": 30.000500000000656,
+        "max": 35.09000000000088,
+        "iqr": 11.644999999999786,
+        "ci95_lo": -5.385473325067938,
+        "ci95_hi": 1.9921399917345581,
+        "cv": 6.075666424005422,
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "step_stats": {
+        "n": 30,
+        "mean": 698.3666666666667,
+        "std": 803.5478005794627,
+        "sem": 146.70708547034482,
+        "min": 9.0,
+        "p1": 12.19,
+        "p5": 35.300000000000004,
+        "p10": 60.300000000000004,
+        "p25": 88.5,
+        "median": 383.5,
+        "p75": 1060.75,
+        "p90": 1739.5000000000005,
+        "p95": 2102.7,
+        "p99": 3056.8500000000013,
+        "max": 3444.0,
+        "iqr": 972.25,
+        "ci95_lo": 410.82077914479083,
+        "ci95_hi": 985.9125541885426,
+        "cv": 1.1506101865010683,
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "time_stats": {
+        "n": 30,
+        "mean": 60.73669424851735,
+        "std": 65.84620274829908,
+        "sem": 12.02181685710069,
+        "min": 5.1268556118011475,
+        "p1": 5.223638343811035,
+        "p5": 5.658079791069031,
+        "p10": 6.9034593343734745,
+        "p25": 10.419101655483246,
+        "median": 36.64949989318848,
+        "p75": 90.82680028676987,
+        "p90": 144.84674146175388,
+        "p95": 174.79365727901458,
+        "p99": 254.42128435134896,
+        "max": 286.63245820999146,
+        "iqr": 80.40769863128662,
+        "ci95_lo": 37.173933208600005,
+        "ci95_hi": 84.2994552884347,
+        "cv": 1.084125561376045,
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "speed_stats": {
+        "n": 30,
+        "mean": 8.971766666666065,
+        "std": 3.243214004903724,
+        "sem": 0.5921271564341467,
+        "min": 0.0,
+        "p1": 1.776540000000012,
+        "p5": 6.126450000000042,
+        "p10": 6.14860000000005,
+        "p25": 6.495000000000165,
+        "median": 8.458000000000414,
+        "p75": 12.10924999999839,
+        "p90": 13.000999999997896,
+        "p95": 13.000999999997896,
+        "p99": 13.000999999997896,
+        "max": 13.000999999997896,
+        "iqr": 5.614249999998225,
+        "ci95_lo": 7.811197440055137,
+        "ci95_hi": 10.132335893276993,
+        "cv": 0.3614911226964524,
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "value_stats": {
+        "n": 20951,
+        "mean": -3.97247212020533,
+        "std": 0.926447870858958,
+        "sem": 0.0064005693740269674,
+        "min": -5.681751251220703,
+        "p1": -5.453583240509033,
+        "p5": -5.31237530708313,
+        "p10": -5.1612749099731445,
+        "p25": -4.771440267562866,
+        "median": -3.9910929203033447,
+        "p75": -3.3205333948135376,
+        "p90": -2.8175642490386963,
+        "p95": -2.3456603288650513,
+        "p99": -1.826501488685608,
+        "max": -1.4667110443115234,
+        "iqr": 1.4509068727493286,
+        "ci95_lo": -3.9850172361784226,
+        "ci95_hi": -3.959927004232237,
+        "cv": 0.23321695982376625,
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "action_distribution": {
+        "noop": {
+          "count": 16888,
+          "frac": 0.8061
+        },
+        "jump": {
+          "count": 2706,
+          "frac": 0.1292
+        },
+        "duck": {
+          "count": 1357,
+          "frac": 0.0648
+        }
+      },
+      "global_action_entropy": 0.6153961188985787,
+      "mean_per_episode_action_entropy": 0.4149997968121136,
+      "survival_rates": {
+        "sr_100": 73.33333333333333,
+        "sr_200": 66.66666666666666,
+        "sr_300": 53.333333333333336,
+        "sr_400": 50.0,
+        "sr_500": 46.666666666666664,
+        "sr_750": 40.0,
+        "sr_1000": 33.33333333333333
+      },
+      "death_causes": {
+        "CACTUS_LARGE": 17,
+        "CACTUS_SMALL": 10,
+        "PTERODACTYL": 2,
+        "read_state_failed": 1
+      },
+      "pterodactyl_death_frac": 0.06666666666666667
+    },
+    "episodes": [
+      {
+        "episode": 1,
+        "score": 422,
+        "return": -5.29,
+        "steps": 433,
+        "wall_time_s": 39.396,
+        "mode": "deterministic",
+        "final_speed": 8.381,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 384,
+          "jump": 49,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.8868,
+          "jump": 0.1132,
+          "duck": 0.0
+        },
+        "value_mean": -3.1778,
+        "value_std": 0.5529,
+        "value_min": -4.3912,
+        "value_max": -1.4801
+      },
+      {
+        "episode": 2,
+        "score": 69,
+        "return": -9.36,
+        "steps": 78,
+        "wall_time_s": 7.416,
+        "mode": "deterministic",
+        "final_speed": 6.222,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 73,
+          "jump": 5,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9359,
+          "jump": 0.0641,
+          "duck": 0.0
+        },
+        "value_mean": -2.4179,
+        "value_std": 0.5982,
+        "value_min": -3.4171,
+        "value_max": -1.51
+      },
+      {
+        "episode": 3,
+        "score": 41,
+        "return": -9.6,
+        "steps": 20,
+        "wall_time_s": 5.127,
+        "mode": "deterministic",
+        "final_speed": 6.127,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 19,
+          "jump": 1,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.95,
+          "jump": 0.05,
+          "duck": 0.0
+        },
+        "value_mean": -1.897,
+        "value_std": 0.2963,
+        "value_min": -2.6542,
+        "value_max": -1.5089
+      },
+      {
+        "episode": 4,
+        "score": 69,
+        "return": -9.4,
+        "steps": 63,
+        "wall_time_s": 7.444,
+        "mode": "deterministic",
+        "final_speed": 6.501,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 56,
+          "jump": 7,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.8889,
+          "jump": 0.1111,
+          "duck": 0.0
+        },
+        "value_mean": -2.4511,
+        "value_std": 0.6342,
+        "value_min": -3.493,
+        "value_max": -1.4921
+      },
+      {
+        "episode": 5,
+        "score": 203,
+        "return": -7.2,
+        "steps": 201,
+        "wall_time_s": 21.52,
+        "mode": "deterministic",
+        "final_speed": 6.626,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 181,
+          "jump": 20,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9005,
+          "jump": 0.0995,
+          "duck": 0.0
+        },
+        "value_mean": -2.8542,
+        "value_std": 0.4807,
+        "value_min": -3.5246,
+        "value_max": -1.509
+      },
+      {
+        "episode": 6,
+        "score": 1290,
+        "return": 3.8,
+        "steps": 1060,
+        "wall_time_s": 96.355,
+        "mode": "deterministic",
+        "final_speed": 11.813,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 877,
+          "jump": 96,
+          "duck": 87
+        },
+        "action_fracs": {
+          "noop": 0.8274,
+          "jump": 0.0906,
+          "duck": 0.0821
+        },
+        "value_mean": -3.6788,
+        "value_std": 0.6679,
+        "value_min": -5.0604,
+        "value_max": -1.496
+      },
+      {
+        "episode": 7,
+        "score": 281,
+        "return": -6.48,
+        "steps": 252,
+        "wall_time_s": 30.081,
+        "mode": "deterministic",
+        "final_speed": 6.845,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 224,
+          "jump": 28,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.8889,
+          "jump": 0.1111,
+          "duck": 0.0
+        },
+        "value_mean": -2.946,
+        "value_std": 0.403,
+        "value_min": -3.5926,
+        "value_max": -1.5138
+      },
+      {
+        "episode": 8,
+        "score": 88,
+        "return": -9.23,
+        "steps": 61,
+        "wall_time_s": 10.119,
+        "mode": "deterministic",
+        "final_speed": 6.274,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 54,
+          "jump": 7,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.8852,
+          "jump": 0.1148,
+          "duck": 0.0
+        },
+        "value_mean": -2.6328,
+        "value_std": 0.5923,
+        "value_min": -3.5507,
+        "value_max": -1.5107
+      },
+      {
+        "episode": 9,
+        "score": 69,
+        "return": -9.35,
+        "steps": 73,
+        "wall_time_s": 7.611,
+        "mode": "deterministic",
+        "final_speed": 6.493,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 70,
+          "jump": 3,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9589,
+          "jump": 0.0411,
+          "duck": 0.0
+        },
+        "value_mean": -2.3534,
+        "value_std": 0.5701,
+        "value_min": -3.4379,
+        "value_max": -1.5203
+      },
+      {
+        "episode": 10,
+        "score": 42,
+        "return": -9.59,
+        "steps": 9,
+        "wall_time_s": 5.461,
+        "mode": "deterministic",
+        "final_speed": 6.126,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 9,
+          "jump": 0,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 1.0,
+          "jump": 0.0,
+          "duck": 0.0
+        },
+        "value_mean": -1.9909,
+        "value_std": 0.5104,
+        "value_min": -2.9736,
+        "value_max": -1.5088
+      },
+      {
+        "episode": 11,
+        "score": 63,
+        "return": -9.42,
+        "steps": 66,
+        "wall_time_s": 7.015,
+        "mode": "deterministic",
+        "final_speed": 6.501,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 64,
+          "jump": 2,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9697,
+          "jump": 0.0303,
+          "duck": 0.0
+        },
+        "value_mean": -2.3172,
+        "value_std": 0.5753,
+        "value_min": -3.4069,
+        "value_max": -1.5252
+      },
+      {
+        "episode": 12,
+        "score": 125,
+        "return": -7.9,
+        "steps": 120,
+        "wall_time_s": 13.858,
+        "mode": "deterministic",
+        "final_speed": 6.4,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 105,
+          "jump": 15,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.875,
+          "jump": 0.125,
+          "duck": 0.0
+        },
+        "value_mean": -2.7384,
+        "value_std": 0.5084,
+        "value_min": -3.4472,
+        "value_max": -1.5112
+      },
+      {
+        "episode": 13,
+        "score": 795,
+        "return": -0.85,
+        "steps": 655,
+        "wall_time_s": 65.839,
+        "mode": "deterministic",
+        "final_speed": 10.011,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 548,
+          "jump": 80,
+          "duck": 27
+        },
+        "action_fracs": {
+          "noop": 0.8366,
+          "jump": 0.1221,
+          "duck": 0.0412
+        },
+        "value_mean": -3.4714,
+        "value_std": 0.6011,
+        "value_min": -4.7284,
+        "value_max": -1.5252
+      },
+      {
+        "episode": 14,
+        "score": 45,
+        "return": -9.56,
+        "steps": 54,
+        "wall_time_s": 5.899,
+        "mode": "deterministic",
+        "final_speed": 6.151,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 53,
+          "jump": 1,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9815,
+          "jump": 0.0185,
+          "duck": 0.0
+        },
+        "value_mean": -2.1118,
+        "value_std": 0.4361,
+        "value_min": -3.2673,
+        "value_max": -1.5089
+      },
+      {
+        "episode": 15,
+        "score": 919,
+        "return": -1.91,
+        "steps": 988,
+        "wall_time_s": 84.657,
+        "mode": "deterministic",
+        "final_speed": 8.535,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 880,
+          "jump": 108,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.8907,
+          "jump": 0.1093,
+          "duck": 0.0
+        },
+        "value_mean": -3.2548,
+        "value_std": 0.4548,
+        "value_min": -4.1768,
+        "value_max": -1.5089
+      },
+      {
+        "episode": 16,
+        "score": 573,
+        "return": -4.74,
+        "steps": 522,
+        "wall_time_s": 43.989,
+        "mode": "deterministic",
+        "final_speed": 11.347,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 448,
+          "jump": 47,
+          "duck": 27
+        },
+        "action_fracs": {
+          "noop": 0.8582,
+          "jump": 0.09,
+          "duck": 0.0517
+        },
+        "value_mean": -3.6256,
+        "value_std": 0.7818,
+        "value_min": -5.0546,
+        "value_max": -1.4869
+      },
+      {
+        "episode": 17,
+        "score": 2149,
+        "return": 11.14,
+        "steps": 1700,
+        "wall_time_s": 141.623,
+        "mode": "deterministic",
+        "final_speed": 13.001,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 1338,
+          "jump": 235,
+          "duck": 127
+        },
+        "action_fracs": {
+          "noop": 0.7871,
+          "jump": 0.1382,
+          "duck": 0.0747
+        },
+        "value_mean": -4.1352,
+        "value_std": 0.8182,
+        "value_min": -5.4994,
+        "value_max": -1.5095
+      },
+      {
+        "episode": 18,
+        "score": 112,
+        "return": -9.03,
+        "steps": 125,
+        "wall_time_s": 11.319,
+        "mode": "deterministic",
+        "final_speed": 7.409,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 113,
+          "jump": 12,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.904,
+          "jump": 0.096,
+          "duck": 0.0
+        },
+        "value_mean": -2.7284,
+        "value_std": 0.6778,
+        "value_min": -3.6549,
+        "value_max": -1.492
+      },
+      {
+        "episode": 19,
+        "score": 226,
+        "return": -7.94,
+        "steps": 259,
+        "wall_time_s": 22.8,
+        "mode": "deterministic",
+        "final_speed": 7.357,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 240,
+          "jump": 19,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9266,
+          "jump": 0.0734,
+          "duck": 0.0
+        },
+        "value_mean": -2.9242,
+        "value_std": 0.5516,
+        "value_min": -3.7749,
+        "value_max": -1.51
+      },
+      {
+        "episode": 20,
+        "score": 583,
+        "return": -4.66,
+        "steps": 459,
+        "wall_time_s": 44.72,
+        "mode": "deterministic",
+        "final_speed": 11.411,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 392,
+          "jump": 49,
+          "duck": 18
+        },
+        "action_fracs": {
+          "noop": 0.854,
+          "jump": 0.1068,
+          "duck": 0.0392
+        },
+        "value_mean": -3.6636,
+        "value_std": 0.7901,
+        "value_min": -4.989,
+        "value_max": -1.4709
+      },
+      {
+        "episode": 21,
+        "score": 1042,
+        "return": -0.61,
+        "steps": 833,
+        "wall_time_s": 68.886,
+        "mode": "deterministic",
+        "final_speed": 13.001,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 661,
+          "jump": 104,
+          "duck": 68
+        },
+        "action_fracs": {
+          "noop": 0.7935,
+          "jump": 0.1248,
+          "duck": 0.0816
+        },
+        "value_mean": -4.094,
+        "value_std": 0.8794,
+        "value_min": -5.4999,
+        "value_max": -1.4975
+      },
+      {
+        "episode": 22,
+        "score": 1138,
+        "return": 1.37,
+        "steps": 1061,
+        "wall_time_s": 87.943,
+        "mode": "deterministic",
+        "final_speed": 11.278,
+        "death_cause": "PTERODACTYL",
+        "action_counts": {
+          "noop": 899,
+          "jump": 101,
+          "duck": 61
+        },
+        "action_fracs": {
+          "noop": 0.8473,
+          "jump": 0.0952,
+          "duck": 0.0575
+        },
+        "value_mean": -3.6689,
+        "value_std": 0.6706,
+        "value_min": -5.0982,
+        "value_max": -1.5093
+      },
+      {
+        "episode": 23,
+        "score": 1411,
+        "return": 2.83,
+        "steps": 1240,
+        "wall_time_s": 103.353,
+        "mode": "deterministic",
+        "final_speed": 12.208,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 1034,
+          "jump": 127,
+          "duck": 79
+        },
+        "action_fracs": {
+          "noop": 0.8339,
+          "jump": 0.1024,
+          "duck": 0.0637
+        },
+        "value_mean": -3.8134,
+        "value_std": 0.7232,
+        "value_min": -5.2408,
+        "value_max": -1.5094
+      },
+      {
+        "episode": 24,
+        "score": 1436,
+        "return": 3.03,
+        "steps": 1259,
+        "wall_time_s": 104.777,
+        "mode": "deterministic",
+        "final_speed": 12.29,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 1042,
+          "jump": 133,
+          "duck": 84
+        },
+        "action_fracs": {
+          "noop": 0.8276,
+          "jump": 0.1056,
+          "duck": 0.0667
+        },
+        "value_mean": -3.8187,
+        "value_std": 0.7302,
+        "value_min": -5.3317,
+        "value_max": -1.5093
+      },
+      {
+        "episode": 25,
+        "score": 339,
+        "return": -5.91,
+        "steps": 334,
+        "wall_time_s": 33.903,
+        "mode": "deterministic",
+        "final_speed": 0.0,
+        "death_cause": "read_state_failed",
+        "action_counts": {
+          "noop": 304,
+          "jump": 30,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9102,
+          "jump": 0.0898,
+          "duck": 0.0
+        },
+        "value_mean": -3.0286,
+        "value_std": 0.5397,
+        "value_min": -3.9719,
+        "value_max": -1.5095
+      },
+      {
+        "episode": 26,
+        "score": 1491,
+        "return": 3.42,
+        "steps": 1100,
+        "wall_time_s": 91.788,
+        "mode": "deterministic",
+        "final_speed": 13.001,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 828,
+          "jump": 149,
+          "duck": 123
+        },
+        "action_fracs": {
+          "noop": 0.7527,
+          "jump": 0.1355,
+          "duck": 0.1118
+        },
+        "value_mean": -4.3118,
+        "value_std": 0.87,
+        "value_min": -5.5779,
+        "value_max": -1.5268
+      },
+      {
+        "episode": 27,
+        "score": 4977,
+        "return": 35.09,
+        "steps": 3444,
+        "wall_time_s": 286.632,
+        "mode": "deterministic",
+        "final_speed": 13.001,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 2559,
+          "jump": 567,
+          "duck": 318
+        },
+        "action_fracs": {
+          "noop": 0.743,
+          "jump": 0.1646,
+          "duck": 0.0923
+        },
+        "value_mean": -4.5847,
+        "value_std": 0.7484,
+        "value_min": -5.5298,
+        "value_max": -1.5095
+      },
+      {
+        "episode": 28,
+        "score": 257,
+        "return": -7.68,
+        "steps": 278,
+        "wall_time_s": 23.152,
+        "mode": "deterministic",
+        "final_speed": 8.841,
+        "death_cause": "PTERODACTYL",
+        "action_counts": {
+          "noop": 252,
+          "jump": 26,
+          "duck": 0
+        },
+        "action_fracs": {
+          "noop": 0.9065,
+          "jump": 0.0935,
+          "duck": 0.0
+        },
+        "value_mean": -3.1674,
+        "value_std": 0.6589,
+        "value_min": -4.4261,
+        "value_max": -1.4813
+      },
+      {
+        "episode": 29,
+        "score": 2777,
+        "return": 16.59,
+        "steps": 2095,
+        "wall_time_s": 173.858,
+        "mode": "deterministic",
+        "final_speed": 13.001,
+        "death_cause": "CACTUS_SMALL",
+        "action_counts": {
+          "noop": 1621,
+          "jump": 318,
+          "duck": 156
+        },
+        "action_fracs": {
+          "noop": 0.7737,
+          "jump": 0.1518,
+          "duck": 0.0745
+        },
+        "value_mean": -4.3097,
+        "value_std": 0.8214,
+        "value_min": -5.5164,
+        "value_max": -1.5093
+      },
+      {
+        "episode": 30,
+        "score": 3122,
+        "return": 17.54,
+        "steps": 2109,
+        "wall_time_s": 175.559,
+        "mode": "deterministic",
+        "final_speed": 13.001,
+        "death_cause": "CACTUS_LARGE",
+        "action_counts": {
+          "noop": 1560,
+          "jump": 367,
+          "duck": 182
+        },
+        "action_fracs": {
+          "noop": 0.7397,
+          "jump": 0.174,
+          "duck": 0.0863
+        },
+        "value_mean": -4.6581,
+        "value_std": 0.7478,
+        "value_min": -5.6818,
+        "value_max": -1.4667
+      }
+    ]
+  }
+}

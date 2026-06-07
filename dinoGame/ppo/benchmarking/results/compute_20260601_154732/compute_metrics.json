@@ -1,0 +1,573 @@
+{
+  "run_timestamp": "20260601_154732",
+  "checkpoint": "checkpoints_scratch_duck/best_duck.pt",
+  "methodology": {
+    "n_warmup": 10,
+    "n_timed_runs": 25,
+    "seed": 42,
+    "torch_threads": 10,
+    "description": "25 timed iterations after 10 warmup passes; perf_counter wall time including host/device sync on CUDA.",
+    "resource_sampling": "psutil process CPU% and RSS per timed iteration"
+  },
+  "hardware": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "python": "3.10.20",
+    "torch": "2.12.0+cpu",
+    "torch_device": "cpu",
+    "cpu_count_logical": 12,
+    "torch_num_threads": 10,
+    "cuda_available": false,
+    "cuda_device_name": null
+  },
+  "system_memory": {
+    "system_ram_total_mb": 16055.36,
+    "system_ram_available_mb": 3372.4,
+    "system_ram_used_mb": 12682.96,
+    "system_ram_percent": 79.0
+  },
+  "model": {
+    "architecture": "ActorCritic MLP (2x128 Tanh + policy/value heads)",
+    "hidden_size": 128,
+    "parameters_total": 23300,
+    "parameters_trainable": 23300,
+    "checkpoint_size_bytes": 97277,
+    "checkpoint_size_mb": 0.09277057647705078,
+    "weight_memory_fp32_mb": 0.0888824462890625,
+    "process_rss_mb_before": 254.945,
+    "process_rss_mb_after": 255.816
+  },
+  "analytical": {
+    "linear_mac_total": 23300,
+    "layer1_mac": 6272,
+    "layer2_mac": 16512,
+    "policy_head_mac": 387,
+    "value_head_mac": 129,
+    "trunk_mac": 22784,
+    "activation_ops_estimate": 256,
+    "softmax_argmax_ops_estimate": 14,
+    "macs_forward_with_activations": 23556,
+    "macs_deploy_with_softmax_argmax": 23570,
+    "flops_forward_estimate": 47112,
+    "flops_deploy_estimate": 47140
+  },
+  "inference": {
+    "forward_only": {
+      "latency_ms": {
+        "n": 25,
+        "mean": 0.0542719941586256,
+        "std": 0.010775047033194951,
+        "sem": 0.00215500940663899,
+        "min": 0.049699912779033184,
+        "max": 0.10440009646117687,
+        "median": 0.05140004213899374,
+        "p5": 0.0503200339153409,
+        "p95": 0.05279993638396263,
+        "p99": 0.0942240469157695,
+        "ci95_lo": 0.05004817572161318,
+        "ci95_hi": 0.058495812595638026,
+        "cv": 0.1985378868095718
+      },
+      "throughput_per_sec": {
+        "n": 25,
+        "mean": 18822.281775252555,
+        "std": 2113.9122488146363,
+        "sem": 422.7824497629273,
+        "min": 9578.535211141962,
+        "max": 20120.75965698411,
+        "median": 19455.23696840255,
+        "p5": 16339.6761399606,
+        "p95": 19685.069922634106,
+        "p99": 20063.145905988633,
+        "ci95_lo": 17993.628173717218,
+        "ci95_hi": 19650.935376787893,
+        "cv": 0.11230903213838812
+      },
+      "per_run": [
+        {
+          "latency_ms": 0.10440009646117687,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05819997750222683,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05389994475990534,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.052600051276385784,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05279993638396263,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.052900053560733795,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.0510999234393239,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.0521000474691391,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05179992876946926,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.050900038331747055,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05040003452450037,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05079992115497589,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05040003452450037,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05100003909319639,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05080003757029772,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05049991887062788,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.06199989002197981,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05330005660653114,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.051299924962222576,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05140004213899374,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05180004518479109,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.050699920393526554,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05170004442334175,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.05030003376305103,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        },
+        {
+          "latency_ms": 0.049699912779033184,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.578
+        }
+      ],
+      "cpu_percent": {
+        "n": 25,
+        "mean": 0.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "median": 0.0,
+        "p5": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.0,
+        "cv": NaN
+      },
+      "cpu_percent_samples": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ram_rss_mb": {
+        "n": 25,
+        "mean": 255.57800000000003,
+        "std": 2.9007785717557726e-14,
+        "sem": 5.801557143511545e-15,
+        "min": 255.578,
+        "max": 255.578,
+        "median": 255.578,
+        "p5": 255.578,
+        "p95": 255.578,
+        "p99": 255.578,
+        "ci95_lo": 255.57800000000003,
+        "ci95_hi": 255.57800000000003,
+        "cv": 1.134987585690385e-16
+      },
+      "ram_rss_mb_samples": [
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578,
+        255.578
+      ],
+      "block_cpu_percent": 880.5298
+    },
+    "argmax_deploy": {
+      "latency_ms": {
+        "n": 25,
+        "mean": 0.09442399721592665,
+        "std": 0.026402331887506784,
+        "sem": 0.005280466377501357,
+        "min": 0.06769993342459202,
+        "max": 0.1463999506086111,
+        "median": 0.08709996473044157,
+        "p5": 0.0682999612763524,
+        "p95": 0.11070002801716328,
+        "p99": 0.14541597105562687,
+        "ci95_lo": 0.084074283116024,
+        "ci95_hi": 0.1047737113158293,
+        "cv": 0.27961463892627353
+      },
+      "throughput_per_sec": {
+        "n": 25,
+        "mean": 11374.249262714928,
+        "std": 2963.4788569001603,
+        "sem": 592.695771380032,
+        "min": 6830.603397356481,
+        "max": 14771.063270156035,
+        "median": 11481.060906222141,
+        "p5": 7149.807212235199,
+        "p95": 14285.72429838931,
+        "p99": 14739.920499464339,
+        "ci95_lo": 10212.565550810064,
+        "ci95_hi": 12535.932974619791,
+        "cv": 0.26054280932760265
+      },
+      "per_run": [
+        {
+          "latency_ms": 0.07459998596459627,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.07239996921271086,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06989995017647743,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06850005593150854,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06830005440860987,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.08709996473044157,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.07240008562803268,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06949994713068008,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06769993342459202,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.0708999577909708,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.07010006811469793,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06999995093792677,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.06829993799328804,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.809
+        },
+        {
+          "latency_ms": 0.10549998842179775,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.11070002801716328,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.10890001431107521,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.10850001126527786,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.10790000669658184,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.10790000669658184,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.14230003580451012,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.812
+        },
+        {
+          "latency_ms": 0.13090006541460752,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.816
+        },
+        {
+          "latency_ms": 0.1265000319108367,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.816
+        },
+        {
+          "latency_ms": 0.1463999506086111,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.816
+        },
+        {
+          "latency_ms": 0.11889997404068708,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.816
+        },
+        {
+          "latency_ms": 0.116499955765903,
+          "cpu_percent": 0.0,
+          "ram_rss_mb": 255.816
+        }
+      ],
+      "cpu_percent": {
+        "n": 25,
+        "mean": 0.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "median": 0.0,
+        "p5": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.0,
+        "cv": NaN
+      },
+      "cpu_percent_samples": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ram_rss_mb": {
+        "n": 25,
+        "mean": 255.81124,
+        "std": 0.002758018612461297,
+        "sem": 0.0005516037224922594,
+        "min": 255.809,
+        "max": 255.816,
+        "median": 255.809,
+        "p5": 255.809,
+        "p95": 255.812,
+        "p99": 255.816,
+        "ci95_lo": 255.8101588567039,
+        "ci95_hi": 255.8123211432961,
+        "cv": 1.0781459846960974e-05
+      },
+      "ram_rss_mb_samples": [
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.809,
+        255.812,
+        255.812,
+        255.812,
+        255.812,
+        255.812,
+        255.812,
+        255.812,
+        255.816,
+        255.816,
+        255.816,
+        255.816,
+        255.816
+      ],
+      "block_cpu_percent": 0.0
+    }
+  },
+  "resources": {
+    "sustained_argmax_burst": {
+      "inner_iterations": 5000,
+      "wall_seconds": 0.327867,
+      "process_cpu_seconds_psutil": 0.28125,
+      "process_cpu_seconds_time_module": 0.28125,
+      "cpu_percent_of_one_core_psutil": 85.7816,
+      "cpu_percent_of_one_core_process_time": 85.7816,
+      "ram_rss_mb_after_burst": 256.672,
+      "inferences_per_second": 15250.07
+    }
+  },
+  "deployment": {
+    "decisions_per_second": 15.0,
+    "frames_per_step": 4,
+    "game_hz": 60.0,
+    "obs_dim": 48,
+    "n_actions": 3,
+    "feature_frames": 4,
+    "features_per_frame": 12,
+    "macs_per_inference_deploy": 23570,
+    "macs_per_game_second": 353550,
+    "macs_per_minute_gameplay": 21213000,
+    "macs_per_episode_median_steps": 38183400,
+    "macs_per_episode_mean_steps": 42590990,
+    "gflops_per_game_second": 0.000707,
+    "median_env_steps_per_episode_ref": 1620,
+    "mean_env_steps_per_episode_ref": 1807
+  }
+}

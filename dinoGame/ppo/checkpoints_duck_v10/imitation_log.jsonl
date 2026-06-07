@@ -1,0 +1,6 @@
+{"iter": 5, "loss": 2.560681015253067, "base_score": 217.125, "base_duck": 0.0, "bird_score": 495.375, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 203.77523350715637}
+{"iter": 10, "loss": 2.3463869614197925, "base_score": 265.75, "base_duck": 0.0, "bird_score": 483.0, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 223.77383065223694}
+{"iter": 15, "loss": 2.470929443836212, "base_score": 97.625, "base_duck": 0.0, "bird_score": 489.625, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 243.4613013267517}
+{"iter": 20, "loss": 2.1691425156055226, "base_score": 276.75, "base_duck": 0.0, "bird_score": 491.75, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 484.83678936958313}
+{"iter": 25, "loss": 2.492670710881551, "base_score": 260.375, "base_duck": 0.0, "bird_score": 487.625, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 502.81649112701416}
+{"iter": 30, "loss": 2.462151622772217, "base_score": 265.125, "base_duck": 0.0, "bird_score": 488.75, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 520.0987620353699}

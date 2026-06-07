@@ -1,0 +1,12 @@
+{"iter": 5, "loss": 2.8261048793792725, "base_score": 103.0, "base_duck": 0.0, "bird_score": 485.125, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 207.9807767868042}
+{"iter": 10, "loss": 2.6139417762557664, "base_score": 214.375, "base_duck": 0.0, "bird_score": 487.875, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 228.51633977890015}
+{"iter": 15, "loss": 1.5559614825507868, "base_score": 155.625, "base_duck": 0.0, "bird_score": 486.875, "bird_duck": 0.0, "bird_jump": 0.0, "elapsed": 462.0763831138611}
+{"iter": 20, "loss": 2.1581196462114653, "base_score": 261.875, "base_duck": 0.00980392156862745, "bird_score": 497.5, "bird_duck": 0.020161290322580645, "bird_jump": 0.0, "elapsed": 480.5901050567627}
+{"iter": 25, "loss": 2.051195524420057, "base_score": 277.25, "base_duck": 0.05737704918032787, "bird_score": 501.375, "bird_duck": 0.08433734939759036, "bird_jump": 0.0, "elapsed": 721.1072919368744}
+{"iter": 30, "loss": 2.046715856426292, "base_score": 98.375, "base_duck": 0.003125, "bird_score": 501.75, "bird_duck": 0.125, "bird_jump": 0.0, "elapsed": 743.2891190052032}
+{"iter": 35, "loss": 2.59141572813193, "base_score": 152.125, "base_duck": 0.010714285714285714, "bird_score": 487.625, "bird_duck": 0.038461538461538464, "bird_jump": 0.0, "elapsed": 762.4321451187134}
+{"iter": 40, "loss": 2.2663807339138455, "base_score": 166.375, "base_duck": 0.035211267605633804, "bird_score": 503.875, "bird_duck": 0.07865168539325842, "bird_jump": 0.06179775280898876, "elapsed": 993.7023122310638}
+{"iter": 45, "loss": 2.5071636484388042, "base_score": 196.0, "base_duck": 0.0625, "bird_score": 603.375, "bird_duck": 0.12598425196850394, "bird_jump": 0.22145669291338582, "elapsed": 1034.0858798027039}
+{"iter": 50, "loss": 3.47057309837603, "base_score": 109.375, "base_duck": 0.0, "bird_score": 493.875, "bird_duck": 0.02734375, "bird_jump": 0.09765625, "elapsed": 1253.971245765686}
+{"iter": 55, "loss": 2.5858832984357267, "base_score": 217.125, "base_duck": 0.03409090909090909, "bird_score": 499.875, "bird_duck": 0.02054794520547945, "bird_jump": 0.1643835616438356, "elapsed": 1276.6441662311554}
+{"iter": 60, "loss": 2.105211052540186, "base_score": 146.22222222222223, "base_duck": 0.008426966292134831, "bird_score": 507.75, "bird_duck": 0.046511627906976744, "bird_jump": 0.19186046511627908, "elapsed": 1302.4014885425568}
