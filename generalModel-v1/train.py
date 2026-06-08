@@ -214,6 +214,15 @@ def main():
     p.add_argument("--save-every", type=int, default=25)
     p.add_argument("--resume", type=str, default=None)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument(
+        "--dino-bc-demos",
+        type=str,
+        default=None,
+        help="Path to expert demo .npz; adds a BC anchor to the Dino update so RL "
+        "fine-tuning can't drift away from the reliable cloned policy.",
+    )
+    p.add_argument("--dino-bc-coef", type=float, default=0.5,
+                   help="Weight of the Dino BC anchor loss (used only with --dino-bc-demos).")
     p.add_argument("--dino-only", action="store_true", help="Skip MiniGrid (smoke test).")
     p.add_argument("--minigrid-only", action="store_true", help="Skip Dino (smoke test).")
     p.add_argument(
@@ -306,6 +315,18 @@ def main():
         print(f"[resume] loading {args.resume}")
         ppo.load(args.resume)
 
+    # Optional Dino BC anchor: keep RL from forgetting the reliable cloned policy.
+    bc_obs_t = bc_act_t = bc_w_t = None
+    if args.dino_bc_demos:
+        _d = np.load(args.dino_bc_demos)
+        bc_obs_t = torch.tensor(_d["obs"], dtype=torch.float32, device=ppo.device)
+        bc_act_t = torch.tensor(_d["actions"], dtype=torch.long, device=ppo.device)
+        _counts = np.bincount(_d["actions"], minlength=DINO_N_ACTIONS).astype(np.float64)
+        _w = _counts.sum() / (DINO_N_ACTIONS * np.maximum(_counts, 1))
+        bc_w_t = torch.tensor(_w, dtype=torch.float32, device=ppo.device)
+        print(f"[dino-bc] anchor on: {len(bc_act_t)} demos, coef={args.dino_bc_coef}, "
+              f"class_weights={np.round(_w, 2).tolist()}")
+
     mg_vec = None
     dino_vec = None
     mg_buf = None
@@ -385,7 +406,9 @@ def main():
                 dino_roll_t = time.time() - t_roll
                 t_upd = time.time()
                 task_stats[TASK_DINO] = ppo.update_task(
-                    TASK_DINO, dino_buf, dino_last_v, gamma=args.gamma, lam=args.lam
+                    TASK_DINO, dino_buf, dino_last_v, gamma=args.gamma, lam=args.lam,
+                    bc_obs=bc_obs_t, bc_actions=bc_act_t,
+                    bc_coef=args.dino_bc_coef, bc_weight=bc_w_t,
                 )
                 task_stats[TASK_DINO]["roll_time"] = dino_roll_t
                 task_stats[TASK_DINO]["upd_time"] = time.time() - t_upd

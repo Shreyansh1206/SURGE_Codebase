@@ -262,8 +262,18 @@ class MultiTaskPPO:
         gamma: float = 0.99,
         lam: float = 0.95,
         target_kl: float = 0.015,
+        bc_obs: torch.Tensor | None = None,
+        bc_actions: torch.Tensor | None = None,
+        bc_coef: float = 0.0,
+        bc_weight: torch.Tensor | None = None,
     ):
-        """On-policy PPO update for a single task. Never sum losses across tasks."""
+        """On-policy PPO update for a single task. Never sum losses across tasks.
+
+        If ``bc_obs``/``bc_actions`` are given (expert demonstrations), an auxiliary
+        class-weighted cross-entropy anchor is added to each minibatch loss. This
+        keeps an RL-fine-tuned policy from drifting away from a reliable behavior-
+        cloned prior (e.g. forgetting how to jump cacti) while still improving.
+        """
         if task_name not in VALID_TASKS:
             raise ValueError(f"Invalid task parameter: {task_name}")
         if len(buf) == 0:
@@ -303,7 +313,9 @@ class MultiTaskPPO:
             "entropy": 0.0,
             "kl": 0.0,
             "grad_norm": 0.0,
+            "bc_loss": 0.0,
         }
+        use_bc = bc_obs is not None and bc_coef > 0.0
         n_updates = 0
         early_stop = False
 
@@ -333,6 +345,14 @@ class MultiTaskPPO:
                 ent = entropy.mean()
                 loss = pi_loss + self.value_coef * v_loss - self.entropy_coef * ent
 
+                bc_loss_val = 0.0
+                if use_bc:
+                    sel = torch.randint(0, bc_obs.shape[0], (b_t.shape[0],), device=device)
+                    bc_logits, _ = self.net.forward(bc_obs[sel], task_name)
+                    bc_loss = F.cross_entropy(bc_logits, bc_actions[sel], weight=bc_weight)
+                    loss = loss + bc_coef * bc_loss
+                    bc_loss_val = bc_loss.item()
+
                 self.optim.zero_grad()
                 loss.backward()
                 gnorm = nn.utils.clip_grad_norm_(
@@ -346,6 +366,7 @@ class MultiTaskPPO:
                     stats["entropy"] += ent.item()
                     stats["kl"] += (old_logp_t[b_t] - new_logp).mean().item()
                     stats["grad_norm"] += float(gnorm)
+                    stats["bc_loss"] += bc_loss_val
                 n_updates += 1
             if early_stop:
                 break

@@ -1,0 +1,134 @@
+[curriculum] MiniGrid obs=980 | stages=[5, 6, 8, 10, 12, 14, 16] | advance@solve_ema>=0.8
+
+========================================================================
+  STAGE 1: MiniGrid-DoorKey-5x5-v0  (max_steps=80, envs=8, rollout=256)
+========================================================================
+  [5x5] upd   1 | ret  -6.21 | solve 0.00 ema 0.00 | len  80.7 | ep  24 | H 1.94 |     2s
+  [5x5] upd   2 | ret  -5.72 | solve 0.00 ema 0.00 | len  76.2 | ep  24 | H 1.92 |     5s
+  [5x5] upd   3 | ret  -5.04 | solve 0.00 ema 0.00 | len  71.9 | ep  24 | H 1.92 |     7s
+  [5x5] upd   4 | ret  -4.37 | solve 0.00 ema 0.00 | len  67.6 | ep  24 | H 1.92 |     9s
+  [5x5] upd   5 | ret  -4.20 | solve 0.00 ema 0.00 | len  62.8 | ep  24 | H 1.93 |    13s
+  [5x5] upd   6 | ret  -4.25 | solve 0.00 ema 0.00 | len  60.2 | ep  26 | H 1.92 |    16s
+  [5x5] upd   7 | ret  -4.06 | solve 0.00 ema 0.00 | len  64.9 | ep  30 | H 1.89 |    19s
+  [5x5] upd   8 | ret  -4.83 | solve 0.00 ema 0.00 | len  76.4 | ep  24 | H 1.85 |    24s
+  [5x5] upd   9 | ret  -4.46 | solve 0.00 ema 0.00 | len  72.1 | ep  24 | H 1.85 |    26s
+  [5x5] upd  10 | ret  -3.10 | solve 0.04 ema 0.01 | len  64.9 | ep  26 | H 1.78 |    30s
+  [5x5] upd  11 | ret  -3.20 | solve 0.00 ema 0.01 | len  64.6 | ep  25 | H 1.75 |    34s
+  [5x5] upd  12 | ret  -2.12 | solve 0.03 ema 0.01 | len  59.3 | ep  29 | H 1.68 |    36s
+  [5x5] upd  13 | ret  -1.71 | solve 0.07 ema 0.02 | len  62.9 | ep  27 | H 1.59 |    39s
+  [5x5] upd  14 | ret  -1.51 | solve 0.07 ema 0.03 | len  64.0 | ep  27 | H 1.56 |    41s
+  [5x5] upd  15 | ret  -0.99 | solve 0.18 ema 0.06 | len  61.9 | ep  28 | H 1.51 |    44s
+  [5x5] upd  16 | ret  -0.71 | solve 0.17 ema 0.08 | len  59.4 | ep  30 | H 1.44 |    46s
+  [5x5] upd  17 | ret  -0.33 | solve 0.24 ema 0.12 | len  61.5 | ep  29 | H 1.37 |    49s
+  [5x5] upd  18 | ret  -0.33 | solve 0.25 ema 0.14 | len  54.8 | ep  32 | H 1.40 |    52s
+  [5x5] upd  19 | ret   0.34 | solve 0.50 ema 0.21 | len  47.5 | ep  36 | H 1.38 |    54s
+  [5x5] upd  20 | ret  -0.19 | solve 0.42 ema 0.25 | len  51.7 | ep  36 | H 1.31 |    57s
+  [5x5] upd  21 | ret   0.60 | solve 0.61 ema 0.33 | len  41.4 | ep  41 | H 1.28 |    59s
+  [5x5] upd  22 | ret   0.94 | solve 0.83 ema 0.43 | len  28.9 | ep  64 | H 1.21 |    61s
+  [5x5] upd  23 | ret   1.13 | solve 0.91 ema 0.52 | len  28.4 | ep  67 | H 1.15 |    63s
+  [5x5] upd  24 | ret   1.14 | solve 0.95 ema 0.61 | len  25.1 | ep  78 | H 1.13 |    65s
+  [5x5] upd  25 | ret   1.23 | solve 0.92 ema 0.67 | len  23.6 | ep  79 | H 1.12 |    67s
+  [5x5] upd  26 | ret   1.30 | solve 0.98 ema 0.73 | len  23.0 | ep  83 | H 1.03 |    70s
+  [5x5] upd  27 | ret   1.41 | solve 1.00 ema 0.79 | len  18.5 | ep 106 | H 0.94 |    71s
+  [5x5] upd  28 | ret   1.42 | solve 1.00 ema 0.83 | len  17.6 | ep 113 | H 0.89 |    73s
+  -> cleared MiniGrid-DoorKey-5x5-v0 (ema_solve 0.83) after 28 updates
+
+========================================================================
+  STAGE 2: MiniGrid-DoorKey-6x6-v0  (max_steps=80, envs=8, rollout=256)
+========================================================================
+  [6x6] upd   1 | ret   0.49 | solve 0.59 ema 0.12 | len  52.8 | ep  34 | H 0.86 |    75s
+  [6x6] upd   2 | ret   0.05 | solve 0.43 ema 0.18 | len  51.5 | ep  35 | H 0.87 |    77s
+  [6x6] upd   3 | ret   0.65 | solve 0.50 ema 0.24 | len  47.7 | ep  36 | H 0.88 |    81s
+  [6x6] upd   4 | ret   1.07 | solve 0.73 ema 0.34 | len  39.1 | ep  49 | H 0.88 |    89s
+  [6x6] upd   5 | ret   1.17 | solve 0.84 ema 0.44 | len  33.2 | ep  57 | H 0.93 |    94s
+  [6x6] upd   6 | ret   1.29 | solve 0.94 ema 0.54 | len  28.9 | ep  67 | H 0.91 |    97s
+  [6x6] upd   7 | ret   1.42 | solve 0.99 ema 0.63 | len  22.8 | ep  84 | H 0.88 |    99s
+  [6x6] upd   8 | ret   1.43 | solve 1.00 ema 0.70 | len  23.6 | ep  82 | H 0.84 |   103s
+  [6x6] upd   9 | ret   1.42 | solve 1.00 ema 0.76 | len  22.7 | ep  86 | H 0.88 |   105s
+  [6x6] upd  10 | ret   1.27 | solve 0.98 ema 0.81 | len  24.3 | ep  82 | H 0.92 |   107s
+  -> cleared MiniGrid-DoorKey-6x6-v0 (ema_solve 0.81) after 10 updates
+
+========================================================================
+  STAGE 3: MiniGrid-DoorKey-8x8-v0  (max_steps=96, envs=8, rollout=256)
+========================================================================
+  [8x8] upd   1 | ret   0.30 | solve 0.50 ema 0.10 | len  68.7 | ep  24 | H 1.01 |   110s
+  [8x8] upd   2 | ret   0.68 | solve 0.55 ema 0.19 | len  52.4 | ep  29 | H 0.89 |   112s
+  [8x8] upd   3 | ret   0.81 | solve 0.58 ema 0.27 | len  48.4 | ep  36 | H 0.76 |   114s
+  [8x8] upd   4 | ret   0.87 | solve 0.67 ema 0.35 | len  51.9 | ep  36 | H 0.94 |   116s
+  [8x8] upd   5 | ret   0.41 | solve 0.48 ema 0.38 | len  60.1 | ep  29 | H 1.01 |   119s
+  [8x8] upd   6 | ret   0.72 | solve 0.67 ema 0.43 | len  53.7 | ep  30 | H 0.94 |   121s
+  [8x8] upd   7 | ret   0.77 | solve 0.64 ema 0.47 | len  52.3 | ep  33 | H 0.80 |   123s
+  [8x8] upd   8 | ret   0.97 | solve 0.71 ema 0.52 | len  48.0 | ep  34 | H 0.83 |   126s
+  [8x8] upd   9 | ret   1.00 | solve 0.67 ema 0.55 | len  43.8 | ep  39 | H 0.71 |   131s
+  [8x8] upd  10 | ret   1.11 | solve 0.79 ema 0.60 | len  41.3 | ep  43 | H 0.65 |   134s
+  [8x8] upd  11 | ret   1.06 | solve 0.78 ema 0.63 | len  49.9 | ep  36 | H 0.62 |   137s
+  [8x8] upd  12 | ret   0.98 | solve 0.69 ema 0.65 | len  48.6 | ep  36 | H 0.72 |   140s
+  [8x8] upd  13 | ret   1.25 | solve 0.83 ema 0.68 | len  40.2 | ep  42 | H 0.63 |   142s
+  [8x8] upd  14 | ret   1.01 | solve 0.84 ema 0.71 | len  41.7 | ep  43 | H 0.72 |   146s
+  [8x8] upd  15 | ret   1.02 | solve 0.71 ema 0.71 | len  48.7 | ep  38 | H 0.72 |   149s
+  [8x8] upd  16 | ret   1.28 | solve 0.90 ema 0.75 | len  37.4 | ep  48 | H 0.74 |   152s
+  [8x8] upd  17 | ret   1.43 | solve 0.96 ema 0.79 | len  35.9 | ep  52 | H 0.70 |   155s
+  [8x8] upd  18 | ret   1.41 | solve 1.00 ema 0.83 | len  36.0 | ep  53 | H 0.72 |   158s
+  -> cleared MiniGrid-DoorKey-8x8-v0 (ema_solve 0.83) after 18 updates
+
+========================================================================
+  STAGE 4: MiniGrid-DoorKey-10x10-v0  (max_steps=120, envs=8, rollout=256)
+========================================================================
+  [10x10] upd   1 | ret   1.18 | solve 0.88 ema 0.18 | len  68.5 | ep  26 | H 0.77 |   160s
+  [10x10] upd   2 | ret   1.31 | solve 0.90 ema 0.32 | len  53.5 | ep  31 | H 0.66 |   162s
+  [10x10] upd   3 | ret   1.08 | solve 0.84 ema 0.43 | len  58.5 | ep  31 | H 0.77 |   164s
+  [10x10] upd   4 | ret   0.72 | solve 0.68 ema 0.48 | len  73.3 | ep  22 | H 0.86 |   166s
+  [10x10] upd   5 | ret   1.03 | solve 0.73 ema 0.53 | len  59.9 | ep  30 | H 0.71 |   169s
+  [10x10] upd   6 | ret   1.40 | solve 0.95 ema 0.61 | len  46.5 | ep  39 | H 0.66 |   171s
+  [10x10] upd   7 | ret   1.34 | solve 0.91 ema 0.67 | len  52.9 | ep  35 | H 0.69 |   173s
+  [10x10] upd   8 | ret   1.46 | solve 0.98 ema 0.73 | len  42.2 | ep  43 | H 0.59 |   175s
+  [10x10] upd   9 | ret   1.43 | solve 0.98 ema 0.78 | len  43.0 | ep  43 | H 0.69 |   177s
+  [10x10] upd  10 | ret   1.32 | solve 0.94 ema 0.81 | len  47.9 | ep  36 | H 0.61 |   182s
+  -> cleared MiniGrid-DoorKey-10x10-v0 (ema_solve 0.81) after 10 updates
+
+========================================================================
+  STAGE 5: MiniGrid-DoorKey-12x12-v0  (max_steps=144, envs=8, rollout=256)
+========================================================================
+  [12x12] upd   1 | ret   1.39 | solve 0.89 ema 0.18 | len  62.8 | ep  27 | H 0.67 |   185s
+  [12x12] upd   2 | ret   1.36 | solve 0.94 ema 0.33 | len  56.4 | ep  31 | H 0.60 |   189s
+  [12x12] upd   3 | ret   1.42 | solve 0.97 ema 0.46 | len  49.5 | ep  33 | H 0.54 |   193s
+  [12x12] upd   4 | ret   1.48 | solve 1.00 ema 0.57 | len  48.3 | ep  35 | H 0.56 |   196s
+  [12x12] upd   5 | ret   1.42 | solve 0.97 ema 0.65 | len  50.6 | ep  37 | H 0.54 |   200s
+  [12x12] upd   6 | ret   1.42 | solve 0.96 ema 0.71 | len  62.6 | ep  27 | H 0.67 |   202s
+  [12x12] upd   7 | ret   1.46 | solve 1.00 ema 0.77 | len  50.8 | ep  36 | H 0.54 |   205s
+  [12x12] upd   8 | ret   1.39 | solve 0.97 ema 0.81 | len  53.9 | ep  34 | H 0.62 |   207s
+  [12x12] upd   9 | ret   1.47 | solve 0.97 ema 0.84 | len  53.8 | ep  34 | H 0.53 |   210s
+  [12x12] upd  10 | ret   1.44 | solve 0.97 ema 0.87 | len  49.0 | ep  35 | H 0.57 |   213s
+  -> cleared MiniGrid-DoorKey-12x12-v0 (ema_solve 0.87) after 10 updates
+
+========================================================================
+  STAGE 6: MiniGrid-DoorKey-14x14-v0  (max_steps=168, envs=8, rollout=256)
+========================================================================
+  [14x14] upd   1 | ret   1.54 | solve 1.00 ema 0.20 | len  60.2 | ep  24 | H 0.55 |   216s
+  [14x14] upd   2 | ret   1.37 | solve 0.94 ema 0.35 | len  59.0 | ep  31 | H 0.54 |   218s
+  [14x14] upd   3 | ret   1.40 | solve 0.95 ema 0.47 | len  76.3 | ep  22 | H 0.59 |   222s
+  [14x14] upd   4 | ret   1.30 | solve 0.94 ema 0.56 | len  57.9 | ep  32 | H 0.63 |   224s
+  [14x14] upd   5 | ret   1.34 | solve 0.96 ema 0.64 | len  69.6 | ep  24 | H 0.75 |   226s
+  [14x14] upd   6 | ret   1.31 | solve 0.87 ema 0.69 | len  70.2 | ep  23 | H 0.66 |   229s
+  [14x14] upd   7 | ret   1.33 | solve 0.95 ema 0.74 | len  69.0 | ep  22 | H 0.71 |   231s
+  [14x14] upd   8 | ret   1.28 | solve 0.92 ema 0.78 | len  65.7 | ep  26 | H 0.74 |   234s
+  [14x14] upd   9 | ret   1.37 | solve 0.96 ema 0.81 | len  74.7 | ep  23 | H 0.64 |   237s
+  [14x14] upd  10 | ret   1.42 | solve 0.96 ema 0.84 | len  56.7 | ep  26 | H 0.57 |   241s
+  -> cleared MiniGrid-DoorKey-14x14-v0 (ema_solve 0.84) after 10 updates
+
+========================================================================
+  STAGE 7: MiniGrid-DoorKey-16x16-v0  (max_steps=192, envs=8, rollout=256)
+========================================================================
+  [16x16] upd   1 | ret   1.54 | solve 1.00 ema 0.20 | len  74.3 | ep  23 | H 0.53 |   245s
+  [16x16] upd   2 | ret   1.47 | solve 0.96 ema 0.35 | len  70.0 | ep  24 | H 0.54 |   247s
+  [16x16] upd   3 | ret   1.48 | solve 0.97 ema 0.47 | len  59.7 | ep  30 | H 0.56 |   250s
+  [16x16] upd   4 | ret   1.46 | solve 1.00 ema 0.58 | len  66.5 | ep  26 | H 0.52 |   253s
+  [16x16] upd   5 | ret   1.50 | solve 1.00 ema 0.66 | len  70.9 | ep  24 | H 0.47 |   257s
+  [16x16] upd   6 | ret   1.48 | solve 1.00 ema 0.73 | len  55.7 | ep  27 | H 0.52 |   259s
+  [16x16] upd   7 | ret   1.41 | solve 0.96 ema 0.78 | len  58.4 | ep  26 | H 0.45 |   262s
+  [16x16] upd   8 | ret   1.45 | solve 0.97 ema 0.82 | len  58.0 | ep  30 | H 0.46 |   265s
+  [16x16] upd   9 | ret   1.46 | solve 1.00 ema 0.85 | len  64.1 | ep  27 | H 0.49 |   271s
+  [16x16] upd  10 | ret   1.48 | solve 1.00 ema 0.88 | len  50.6 | ep  26 | H 0.58 |   275s
+  -> cleared MiniGrid-DoorKey-16x16-v0 (ema_solve 0.88) after 10 updates
+
+[done] final weights -> checkpoints_curriculum_v2\latest.pt

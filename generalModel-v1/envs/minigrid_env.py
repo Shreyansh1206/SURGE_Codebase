@@ -1,5 +1,7 @@
 """MiniGrid factory — 7×7 egocentric observations via the official minigrid library."""
 
+import os
+
 import gymnasium as gym
 import minigrid  # noqa: F401 — registers env IDs
 import numpy as np
@@ -50,14 +52,27 @@ KEY_PICKUP_REWARD = 0.25
 KEY_DROP_PENALTY = -0.05
 DOOR_OPEN_REWARD = 0.35
 
+# Anti-stall shaping (Fix 1b). Greedy memoryless policies fall into limit cycles
+# — turn-left/turn-right oscillation, 360° spins, toggle-spam — where the agent's
+# position is frozen for the rest of the episode. We penalise a frozen position
+# once it persists past a grace window (enough for legitimate in-place reorienting),
+# escalating per stuck step so the policy learns to break out. Off by default for
+# backward compatibility; enabled per-call or via the MINIGRID_ANTI_STALL env var.
+STALL_PATIENCE = 4          # in-place steps allowed before penalising (reorienting)
+STALL_PENALTY_PER_STEP = 0.02
+STALL_PENALTY_CAP = 0.1     # max penalty applied on any single step
+
 
 class DoorKeyProgressRewardWrapper(Wrapper):
     """Milestone rewards/penalties for key pickup, key drop, and door opening."""
 
-    def __init__(self, env):
+    def __init__(self, env, anti_stall: bool = False):
         super().__init__(env)
         self._key_reward_given = False
         self._door_open_rewarded: set[tuple[int, int]] = set()
+        self._anti_stall = anti_stall
+        self._prev_pos: tuple[int, int] | None = None
+        self._stuck_steps = 0
 
     def _base_env(self):
         return self.unwrapped
@@ -79,6 +94,8 @@ class DoorKeyProgressRewardWrapper(Wrapper):
     def reset(self, *, seed=None, options=None):
         self._key_reward_given = False
         self._door_open_rewarded = set()
+        self._prev_pos = None
+        self._stuck_steps = 0
         return self.env.reset(seed=seed, options=options)
 
     def step(self, action):
@@ -115,6 +132,22 @@ class DoorKeyProgressRewardWrapper(Wrapper):
                 info["key_drop_penalty"] = key_drop_penalty
             if door_bonus:
                 info["door_open_bonus"] = door_bonus
+
+        # Anti-stall: penalise a frozen agent position (spinning / toggle-spam).
+        # Skip on the terminal step so reaching the goal is never penalised.
+        if self._anti_stall and not (terminated or truncated):
+            pos = tuple(self._base_env().agent_pos)
+            if self._prev_pos is not None and pos == self._prev_pos:
+                self._stuck_steps += 1
+            else:
+                self._stuck_steps = 0
+            self._prev_pos = pos
+            if self._stuck_steps >= STALL_PATIENCE:
+                over = self._stuck_steps - STALL_PATIENCE + 1
+                stall_penalty = -min(STALL_PENALTY_PER_STEP * over, STALL_PENALTY_CAP)
+                reward = float(reward) + stall_penalty
+                info = dict(info)
+                info["stall_penalty"] = stall_penalty
 
         return obs, reward, terminated, truncated, info
 
@@ -153,6 +186,7 @@ def make_minigrid_env(
     env_id: str = DEFAULT_ENV_ID,
     max_episode_steps: int | None = 1000,
     render_mode=None,
+    anti_stall: bool | None = None,
 ):
     """
     Create a MiniGrid env with the default 7×7 egocentric view.
@@ -161,9 +195,15 @@ def make_minigrid_env(
     FullyObsWrapper. Out-of-map cells in the 7×7 window are unseen (0, 0, 0).
     Pass ``max_episode_steps=None`` to use MiniGrid's own size-scaled default
     (10·size²), or an explicit cap for a tighter learning signal.
+
+    ``anti_stall`` enables the frozen-position penalty (Fix 1b). When left as
+    None it falls back to the MINIGRID_ANTI_STALL env var ("1" to enable), so a
+    whole run can opt in without threading a flag through every call site.
     """
+    if anti_stall is None:
+        anti_stall = os.environ.get("MINIGRID_ANTI_STALL", "0") == "1"
     env = gym.make(env_id, render_mode=render_mode, max_episode_steps=max_episode_steps)
-    env = DoorKeyProgressRewardWrapper(env)
+    env = DoorKeyProgressRewardWrapper(env, anti_stall=anti_stall)
     env = OneHotFlatObsWrapper(env)
     return env
 

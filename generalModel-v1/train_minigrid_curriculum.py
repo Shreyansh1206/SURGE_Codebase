@@ -54,7 +54,7 @@ def make_doorkey_vec_env(size: int, n_envs: int, seed: int, max_steps: int):
     env_id = f"MiniGrid-DoorKey-{size}x{size}-v0"
 
     def _factory():
-        return make_minigrid_env(env_id, max_episode_steps=max_steps)
+        return make_minigrid_env(env_id, max_episode_steps=max_steps, anti_stall=True)
 
     vec = gym.vector.SyncVectorEnv([_factory for _ in range(n_envs)])
     vec.reset(seed=seed)
