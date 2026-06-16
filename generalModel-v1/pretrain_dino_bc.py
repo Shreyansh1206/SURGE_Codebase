@@ -1,19 +1,3 @@
-"""
-Behavior-cloning warmup for the Dino pathway.
-
-Starts from a checkpoint whose MiniGrid pathway + shared core are already good
-(the anti-stall curriculum), FREEZES the shared core and every MiniGrid/critic
-parameter, and trains only the Dino encoder + Dino actor to imitate the scripted
-expert's actions. Because the core is frozen, MiniGrid is left bit-for-bit intact
-while Dino gets a strong policy prior. The saved checkpoint therefore contains a
-ready combined init: MiniGrid (curriculum) + core (curriculum) + Dino (BC).
-
-Run RL fine-tuning afterwards (train_parallel.py --resume <this checkpoint>).
-
-Usage:
-    python pretrain_dino_bc.py --resume checkpoints_curriculum_v2/latest.pt \
-        --demos demos/dino_demos.npz --out checkpoints_dino_bc/bc_init.pt
-"""
 
 from __future__ import annotations
 
@@ -32,8 +16,7 @@ ACTION_NAMES = {0: "run", 1: "jump", 2: "duck"}
 
 
 def eval_dino_greedy(ppo, n_eps=15, frames_per_step=4):
-    """Greedy rollout score — sanity check that BC produced a useful policy."""
-    import dino_env  # noqa: F401
+    import dino_env  # noqa
     from dino_env import DinoEnv
 
     ppo.net.eval()
@@ -79,13 +62,11 @@ def main():
     n = len(act)
     print(f"[bc] {n} demos | expert mean score {float(data.get('mean_score', 0)):.0f}")
 
-    # Class-weighted loss — run is ~95% of frames, so unweighted CE just predicts run.
     counts = np.bincount(act.numpy(), minlength=DINO_N_ACTIONS).astype(np.float64)
     weights = counts.sum() / (DINO_N_ACTIONS * np.maximum(counts, 1))
     w = torch.tensor(weights, dtype=torch.float32)
     print(f"[bc] class counts {counts.astype(int).tolist()} -> weights {np.round(weights, 2).tolist()}")
 
-    # Train/val split.
     perm = torch.randperm(n)
     n_val = int(n * args.val_frac)
     val_idx, tr_idx = perm[:n_val], perm[n_val:]
@@ -98,7 +79,6 @@ def main():
     net = ppo.net
     w = w.to(ppo.device)
 
-    # Freeze everything, then unfreeze only the Dino encoder + actor.
     for pm in net.parameters():
         pm.requires_grad_(False)
     trainable = list(net.dino_encoder.parameters()) + list(net.dino_actor.parameters())
@@ -150,8 +130,6 @@ def main():
             tot += loss.item()
             nb += 1
         acc, per = run_eval()
-        # Select on actual game score, not classification accuracy — high action
-        # accuracy doesn't guarantee good play, and late epochs can diverge.
         gmean, gmax = eval_dino_greedy(ppo, n_eps=10)
         per_s = " ".join(f"{k}={v:.2f}" for k, v in per.items())
         flag = ""

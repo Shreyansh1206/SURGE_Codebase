@@ -1,11 +1,3 @@
-"""
-Run a trained multi-task checkpoint on MiniGrid, Dino, or both.
-
-Examples:
-    python infer.py --task both --ckpt checkpoints_parallel/latest.pt
-    python infer.py --task minigrid --episodes 10 --render
-    python infer.py --task dino --ckpt checkpoints_visible/latest.pt --render
-"""
 
 from __future__ import annotations
 

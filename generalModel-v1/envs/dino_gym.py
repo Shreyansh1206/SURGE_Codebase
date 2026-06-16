@@ -1,4 +1,3 @@
-"""Gymnasium wrapper around the local pygame Dino environment."""
 
 import os
 import sys
@@ -21,7 +20,6 @@ from dino_env import (  # noqa: E402
 
 
 class DinoGymEnv(gym.Env):
-    """Standard Gymnasium API over the 48-dim frame-stacked pygame Dino env."""
 
     metadata = {"render_modes": ["human", None]}
 
@@ -58,7 +56,6 @@ class DinoGymEnv(gym.Env):
 
 
 class VecDinoGymEnv:
-    """Vectorised Dino env with Gymnasium-compatible step/reset semantics."""
 
     def __init__(
         self,

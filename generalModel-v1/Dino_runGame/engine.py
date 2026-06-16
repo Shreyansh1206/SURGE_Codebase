@@ -1,6 +1,3 @@
-"""
-Headless, steppable Chrome Dino engine extracted from main.py for RL training.
-"""
 
 from __future__ import annotations
 
@@ -191,7 +188,6 @@ class Cloud(pygame.sprite.Sprite):
 
 
 class DinoGameEngine:
-    """Single-episode pygame dino runner with explicit action stepping."""
 
     def __init__(self, render: bool = False, seed: int | None = None):
         if seed is not None:
@@ -310,7 +306,6 @@ class DinoGameEngine:
             self.clouds.add(cloud)
 
     def refresh_display(self):
-        """Reclaim the pygame window after another env (e.g. MiniGrid) used the display."""
         if not self.render:
             return
         if not pygame.get_init():

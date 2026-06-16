@@ -1,11 +1,3 @@
-"""
-Interleaved multi-task PPO training for MiniGrid + Chrome Dino.
-
-Each update cycle:
-  1. Collect on-policy rollouts from MiniGrid vector env
-  2. Collect on-policy rollouts from Dino vector env
-  3. Run separate PPO updates per task (no summed loss / shared backward)
-"""
 
 import argparse
 import json
@@ -30,7 +22,6 @@ def _num_envs(vec_env) -> int:
 
 
 def _env_info_at(infos, i: int) -> dict:
-    """Per-env info from gymnasium vector (dict) or legacy list returns."""
     if isinstance(infos, list):
         return infos[i] if i < len(infos) else {}
     if isinstance(infos, dict):
@@ -105,7 +96,6 @@ def collect_rollout(
 
 
 class MiniGridVecEnv:
-    """Thin adapter so MiniGrid vector env matches the Dino vec API."""
 
     def __init__(self, n_envs: int, env_id: str, seed: int, render: bool = False):
         from envs.minigrid_env import make_minigrid_env
@@ -116,7 +106,6 @@ class MiniGridVecEnv:
         self._single = None
         self._vec = None
 
-        # Single-env path: correct human render + list-style infos (visible training).
         if render or n_envs == 1:
             self.n_envs = 1
             render_mode = "human" if render else None
@@ -266,7 +255,7 @@ def main():
     use_minigrid = not args.dino_only
     use_dino = not args.minigrid_only
 
-    mg_dim = 147  # 7×7×3 partial view (default MiniGrid agent_view_size)
+    mg_dim = 147
     minigrid_actions = 7
     if use_minigrid:
         minigrid_actions, _, minigrid_obs_dim = _load_minigrid()
@@ -315,7 +304,6 @@ def main():
         print(f"[resume] loading {args.resume}")
         ppo.load(args.resume)
 
-    # Optional Dino BC anchor: keep RL from forgetting the reliable cloned policy.
     bc_obs_t = bc_act_t = bc_w_t = None
     if args.dino_bc_demos:
         _d = np.load(args.dino_bc_demos)

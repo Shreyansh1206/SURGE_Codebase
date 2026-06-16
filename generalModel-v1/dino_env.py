@@ -1,6 +1,3 @@
-"""
-Gymnasium-compatible Dino environment backed by the local pygame engine.
-"""
 
 from __future__ import annotations
 
@@ -14,7 +11,7 @@ _ENGINE_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Dino_ru
 if _ENGINE_ROOT not in sys.path:
     sys.path.insert(0, _ENGINE_ROOT)
 
-from engine import DinoGameEngine, DINO_X, HEIGHT, WIDTH  # noqa: E402
+from engine import DinoGameEngine, DINO_X, HEIGHT, WIDTH  # noqa
 
 FEATURES_PER_FRAME = 12
 FRAME_STACK = 4
@@ -35,7 +32,6 @@ _NO_OBSTACLE_X = 9999.0
 
 
 class DinoEnv:
-    """Single pygame Dino instance with frame-stacked observations."""
 
     def __init__(
         self,
@@ -85,13 +81,6 @@ class DinoEnv:
         return np.concatenate(frames, axis=0)
 
     def _detect_obstacle_pass(self, prev_x: float | None, cur_x: float) -> bool:
-        """Detect when the front obstacle clears after entering the danger zone.
-
-        Pygame obstacles move left (rect.left decreases). After a successful
-        dodge they often sit behind the dino at negative x before despawning,
-        so a one-frame threshold test misses the event. Latch once the nearest
-        obstacle enters the approach window, then reward when it clears.
-        """
         if prev_x is not None and prev_x < _NO_OBSTACLE_X and prev_x < CANVAS_W:
             if (DINO_X - 40.0) <= prev_x <= (DINO_X + DANGER_RANGE):
                 self._obstacle_in_danger = True
@@ -174,7 +163,6 @@ class DinoEnv:
 
 
 def _dino_worker(remote, parent_remote, env_id: int, frames_per_step: int):
-    """Subprocess worker — each process owns an isolated headless pygame instance."""
     import os
 
     parent_remote.close()
@@ -200,7 +188,6 @@ def _dino_worker(remote, parent_remote, env_id: int, frames_per_step: int):
 
 
 class MPVecDinoEnv:
-    """Multiprocess vector env — true parallel headless Dino instances."""
 
     def __init__(
         self,
@@ -272,7 +259,6 @@ class MPVecDinoEnv:
 
 
 class VecDinoEnv:
-    """In-process vector env (sequential steps). Use MPVecDinoEnv for parallel training."""
 
     def __init__(self, n_envs: int = 1, **env_kwargs):
         self.n_envs = n_envs

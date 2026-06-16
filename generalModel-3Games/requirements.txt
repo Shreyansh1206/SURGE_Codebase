@@ -1,0 +1,7 @@
+torch>=2.0.0
+numpy>=1.24.0
+gymnasium>=1.0.0
+minigrid>=2.3.0
+pygame>=2.5.0
+swig>=4.0.0
+box2d-py>=2.3.5

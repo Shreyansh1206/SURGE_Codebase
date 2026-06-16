@@ -1,0 +1,715 @@
+{
+  "ckpt_path": "C:\\Users\\shilp\\Downloads\\surgeShit\\generalModel-v1\\checkpoints_final\\final.pt",
+  "run_timestamp": "2026-06-09T15:18:48",
+  "meta": {
+    "ckpt_path": "C:\\Users\\shilp\\Downloads\\surgeShit\\generalModel-v1\\checkpoints_final\\final.pt",
+    "ckpt_size_bytes": 1008449,
+    "minigrid_dim": 980,
+    "dino_dim": 48,
+    "device": "cpu"
+  },
+  "model_summary": {
+    "param_counts": {
+      "minigrid_encoder": 142832,
+      "dino_encoder": 6272,
+      "shared_core": 33024,
+      "minigrid_actor": 17415,
+      "minigrid_critic": 16641,
+      "dino_actor": 16899,
+      "dino_critic": 16641
+    },
+    "total_params": 249724,
+    "trainable_params": 249724,
+    "param_bytes": 998896,
+    "ckpt_size_bytes": 1008449,
+    "device": "cpu",
+    "torch_version": "2.12.0+cpu",
+    "has_cuda": false
+  },
+  "compute_benchmark": {
+    "minigrid": {
+      "latency_mean_ms": 1.4379136681479092,
+      "latency_std_ms": 0.411460643203653,
+      "latency_min_ms": 0.7301000005099922,
+      "latency_max_ms": 3.711299999849871,
+      "latency_p50_ms": 1.4633500104537234,
+      "latency_p95_ms": 2.0730950112920254,
+      "latency_p99_ms": 2.282273000455461,
+      "throughput_batch1_steps_per_sec": 695.452044271921,
+      "batched_throughput_steps_per_sec": {
+        "1": 603.4255259772656,
+        "8": 2418.2568720259355,
+        "32": 7943.6162123412105,
+        "128": 20994.86347615221
+      }
+    },
+    "dino": {
+      "latency_mean_ms": 0.5126739996679438,
+      "latency_std_ms": 0.13432268606064454,
+      "latency_min_ms": 0.2486000012140721,
+      "latency_max_ms": 1.1402000091038644,
+      "latency_p50_ms": 0.48719998449087143,
+      "latency_p95_ms": 0.7690150014241227,
+      "latency_p99_ms": 1.0244819987565277,
+      "throughput_batch1_steps_per_sec": 1950.5572754766083,
+      "batched_throughput_steps_per_sec": {
+        "1": 2977.088331190676,
+        "8": 11020.214749260791,
+        "32": 37094.85464573894,
+        "128": 120994.72788529456
+      }
+    }
+  },
+  "minigrid": {
+    "per_size": {
+      "MiniGrid-DoorKey-5x5-v0": {
+        "size": 5,
+        "env_id": "MiniGrid-DoorKey-5x5-v0",
+        "n_episodes": 60,
+        "wall_time_s": 20.320825338363647,
+        "solve_rate": 0.48333333333333334,
+        "loop_fail_rate": 0.5166666666666667,
+        "wander_fail_rate": 0.0,
+        "return_mean": 1.0681533333333335,
+        "return_std": 0.4840345171805645,
+        "return_min": 0.6,
+        "return_max": 1.5748,
+        "return_p25": 0.6,
+        "return_p50": 0.6,
+        "return_p75": 1.5676,
+        "return_p90": 1.5712,
+        "length_mean": 133.38333333333333,
+        "length_std": 120.57308871478006,
+        "length_min": 7,
+        "length_max": 250,
+        "key_pickup_rate": 1.0,
+        "door_open_rate": 1.0,
+        "action_distribution": {
+          "left": 0.4756966137698363,
+          "right": 0.4883168811695614,
+          "forward": 0.02099212795201799,
+          "pickup": 0.00749718855429214,
+          "drop": 0.0,
+          "toggle": 0.00749718855429214,
+          "done": 0.0
+        },
+        "entropy_mean": 0.5137764672895959,
+        "value_mean": 0.8892664058007361,
+        "action_confidence_mean": 0.7530759176706354,
+        "unique_states_mean": 6.2
+      },
+      "MiniGrid-DoorKey-6x6-v0": {
+        "size": 6,
+        "env_id": "MiniGrid-DoorKey-6x6-v0",
+        "n_episodes": 60,
+        "wall_time_s": 26.5782630443573,
+        "solve_rate": 0.6,
+        "loop_fail_rate": 0.4,
+        "wander_fail_rate": 0.0,
+        "return_mean": 1.1205416666666663,
+        "return_std": 0.5645116052222093,
+        "return_min": 0.0,
+        "return_max": 1.5775000000000001,
+        "return_p25": 0.6,
+        "return_p50": 1.56375,
+        "return_p75": 1.5699999999999998,
+        "return_p90": 1.575,
+        "length_mean": 127.45,
+        "length_std": 140.89622954500948,
+        "length_min": 9,
+        "length_max": 300,
+        "key_pickup_rate": 0.9666666666666667,
+        "door_open_rate": 0.85,
+        "action_distribution": {
+          "left": 0.16123970184386033,
+          "right": 0.7871060546619589,
+          "forward": 0.03740028769452073,
+          "pickup": 0.0075846737282594485,
+          "drop": 0.0,
+          "toggle": 0.006669282071400549,
+          "done": 0.0
+        },
+        "entropy_mean": 0.1530459403950342,
+        "value_mean": 0.980721740004773,
+        "action_confidence_mean": 0.9513782363789242,
+        "unique_states_mean": 9.333333333333334
+      },
+      "MiniGrid-DoorKey-8x8-v0": {
+        "size": 8,
+        "env_id": "MiniGrid-DoorKey-8x8-v0",
+        "n_episodes": 60,
+        "wall_time_s": 6.532396078109741,
+        "solve_rate": 0.95,
+        "loop_fail_rate": 0.0,
+        "wander_fail_rate": 0.05,
+        "return_mean": 1.5218515625,
+        "return_std": 0.21160859839234847,
+        "return_min": 0.6,
+        "return_max": 1.58453125,
+        "return_p25": 1.5630859375,
+        "return_p50": 1.5704687499999999,
+        "return_p75": 1.57609375,
+        "return_p90": 1.57890625,
+        "length_mean": 35.016666666666666,
+        "length_std": 61.00450575344597,
+        "length_min": 11,
+        "length_max": 300,
+        "key_pickup_rate": 1.0,
+        "door_open_rate": 1.0,
+        "action_distribution": {
+          "left": 0.03284150404569253,
+          "right": 0.33603046168491196,
+          "forward": 0.5740123750594954,
+          "pickup": 0.028557829604950024,
+          "drop": 0.0,
+          "toggle": 0.028557829604950024,
+          "done": 0.0
+        },
+        "entropy_mean": 0.06250377909251022,
+        "value_mean": 1.0399577541540899,
+        "action_confidence_mean": 0.9843941994322915,
+        "unique_states_mean": 18.883333333333333
+      },
+      "MiniGrid-DoorKey-10x10-v0": {
+        "size": 10,
+        "env_id": "MiniGrid-DoorKey-10x10-v0",
+        "n_episodes": 60,
+        "wall_time_s": 5.914965391159058,
+        "solve_rate": 0.9833333333333333,
+        "loop_fail_rate": 0.0,
+        "wander_fail_rate": 0.016666666666666666,
+        "return_mean": 1.5581183333333333,
+        "return_std": 0.12498747602815607,
+        "return_min": 0.6,
+        "return_max": 1.5865,
+        "return_p25": 1.5685,
+        "return_p50": 1.5766,
+        "return_p75": 1.5802,
+        "return_p90": 1.5838,
+        "length_mean": 33.016666666666666,
+        "length_std": 35.85456347833874,
+        "length_min": 15,
+        "length_max": 300,
+        "key_pickup_rate": 1.0,
+        "door_open_rate": 1.0,
+        "action_distribution": {
+          "left": 0.04240282685512368,
+          "right": 0.19737506309944472,
+          "forward": 0.6996466431095406,
+          "pickup": 0.03028773346794548,
+          "drop": 0.0,
+          "toggle": 0.03028773346794548,
+          "done": 0.0
+        },
+        "entropy_mean": 0.059222168406291464,
+        "value_mean": 1.0253164676501965,
+        "action_confidence_mean": 0.9850095190652735,
+        "unique_states_mean": 26.05
+      },
+      "MiniGrid-DoorKey-12x12-v0": {
+        "size": 12,
+        "env_id": "MiniGrid-DoorKey-12x12-v0",
+        "n_episodes": 60,
+        "wall_time_s": 8.275229215621948,
+        "solve_rate": 0.9666666666666667,
+        "loop_fail_rate": 0.03333333333333333,
+        "wander_fail_rate": 0.0,
+        "return_mean": 1.52525,
+        "return_std": 0.2833166477930068,
+        "return_min": 0.0,
+        "return_max": 1.589375,
+        "return_p25": 1.5725,
+        "return_p50": 1.5790625,
+        "return_p75": 1.583125,
+        "return_p90": 1.58625,
+        "length_mean": 44.266666666666666,
+        "length_std": 48.766746411418055,
+        "length_min": 17,
+        "length_max": 300,
+        "key_pickup_rate": 0.9666666666666667,
+        "door_open_rate": 0.9666666666666667,
+        "action_distribution": {
+          "left": 0.1408132530120482,
+          "right": 0.22364457831325302,
+          "forward": 0.5918674698795181,
+          "pickup": 0.021837349397590362,
+          "drop": 0.0,
+          "toggle": 0.021837349397590362,
+          "done": 0.0
+        },
+        "entropy_mean": 0.06451986787461828,
+        "value_mean": 1.0196641436162435,
+        "action_confidence_mean": 0.9814794189419765,
+        "unique_states_mean": 32.083333333333336
+      },
+      "MiniGrid-DoorKey-14x14-v0": {
+        "size": 14,
+        "env_id": "MiniGrid-DoorKey-14x14-v0",
+        "n_episodes": 60,
+        "wall_time_s": 12.338664054870605,
+        "solve_rate": 0.9,
+        "loop_fail_rate": 0.1,
+        "wander_fail_rate": 0.0,
+        "return_mean": 1.4236530612244898,
+        "return_std": 0.47458268906361356,
+        "return_min": 0.0,
+        "return_max": 1.5908163265306121,
+        "return_p25": 1.5758928571428572,
+        "return_p50": 1.582091836734694,
+        "return_p75": 1.5854209183673469,
+        "return_p90": 1.5885204081632653,
+        "length_mean": 65.6,
+        "length_std": 79.04032725978135,
+        "length_min": 20,
+        "length_max": 300,
+        "key_pickup_rate": 0.9,
+        "door_open_rate": 0.9,
+        "action_distribution": {
+          "left": 0.23983739837398374,
+          "right": 0.2891260162601626,
+          "forward": 0.44359756097560976,
+          "pickup": 0.013719512195121951,
+          "drop": 0.0,
+          "toggle": 0.013719512195121951,
+          "done": 0.0
+        },
+        "entropy_mean": 0.0814776159726466,
+        "value_mean": 1.0070576611429982,
+        "action_confidence_mean": 0.9683204706477216,
+        "unique_states_mean": 34.516666666666666
+      },
+      "MiniGrid-DoorKey-16x16-v0": {
+        "size": 16,
+        "env_id": "MiniGrid-DoorKey-16x16-v0",
+        "n_episodes": 60,
+        "wall_time_s": 12.543729305267334,
+        "solve_rate": 0.9333333333333333,
+        "loop_fail_rate": 0.06666666666666667,
+        "wander_fail_rate": 0.0,
+        "return_mean": 1.4767981770833332,
+        "return_std": 0.39472809761310507,
+        "return_min": 0.0,
+        "return_max": 1.5919140625,
+        "return_p25": 1.5770605468749999,
+        "return_p50": 1.5827734375,
+        "return_p75": 1.5860253906250001,
+        "return_p90": 1.5883984375,
+        "length_mean": 67.03333333333333,
+        "length_std": 64.1417614004757,
+        "length_min": 23,
+        "length_max": 300,
+        "key_pickup_rate": 0.9333333333333333,
+        "door_open_rate": 0.9333333333333333,
+        "action_distribution": {
+          "left": 0.16658378915962208,
+          "right": 0.21954251616111387,
+          "forward": 0.5860268523122825,
+          "pickup": 0.0139234211834908,
+          "drop": 0.0,
+          "toggle": 0.0139234211834908,
+          "done": 0.0
+        },
+        "entropy_mean": 0.070478385403221,
+        "value_mean": 0.9967084011870602,
+        "action_confidence_mean": 0.9731630639938242,
+        "unique_states_mean": 45.233333333333334
+      }
+    },
+    "overall": {
+      "total_episodes": 420,
+      "solve_rate": 0.830952380952381,
+      "loop_fail_rate": 0.1595238095238095,
+      "wander_fail_rate": 0.009523809523809525,
+      "return_mean": 1.3849094477344512,
+      "return_std": 0.43478885751804064,
+      "return_min": 0.0,
+      "return_max": 1.5919140625,
+      "return_p25": 1.564,
+      "return_p50": 1.5733673469387754,
+      "return_p75": 1.5811183673469387,
+      "return_p90": 1.5856024999999998,
+      "length_mean": 72.25238095238095,
+      "length_std": 94.64282791254415,
+      "length_p25": 20.0,
+      "length_p50": 32.0,
+      "length_p75": 51.25,
+      "length_p90": 250.0,
+      "entropy_mean": 0.14357488920484537,
+      "value_mean": 0.9940989390794425,
+      "action_confidence_mean": 0.942402975161521,
+      "action_distribution": {
+        "left": 0.2366374480985962,
+        "right": 0.44944968035325905,
+        "forward": 0.28738548737889674,
+        "pickup": 0.013379028537533777,
+        "drop": 0.0,
+        "toggle": 0.01314835563171423,
+        "done": 0.0
+      },
+      "action_counts": {
+        "left": 7181,
+        "right": 13639,
+        "forward": 8721,
+        "pickup": 406,
+        "drop": 0,
+        "toggle": 399,
+        "done": 0
+      }
+    }
+  },
+  "dino": {
+    "summary": {
+      "n_episodes": 20,
+      "wall_time_s": 8.279470205307007,
+      "score_mean": 304.8,
+      "score_std": 149.06964815145975,
+      "score_min": 48,
+      "score_max": 510,
+      "score_median": 344,
+      "score_p10": 96.4,
+      "score_p25": 164.5,
+      "score_p50": 344.5,
+      "score_p75": 404.75,
+      "score_p90": 493.5,
+      "score_p95": 507.15,
+      "score_p99": 509.43,
+      "return_mean": 87.12500000000065,
+      "return_std": 49.823693610571155,
+      "return_min": 3.5099999999999945,
+      "return_max": 156.0400000000022,
+      "return_p25": 40.39999999999984,
+      "return_p50": 101.98500000000047,
+      "return_p75": 120.88750000000084,
+      "return_p90": 151.12200000000212,
+      "steps_mean": 534.75,
+      "steps_std": 260.85990013798596,
+      "steps_min": 85,
+      "steps_max": 894,
+      "passes_per_episode": 24.15,
+      "passes_per_step": 0.04516129032258064,
+      "action_distribution": {
+        "noop": 0.9358578775128564,
+        "jump": 0.044600280504908836,
+        "duck": 0.01954184198223469
+      },
+      "action_counts": {
+        "noop": 10009,
+        "jump": 477,
+        "duck": 209
+      },
+      "death_speed_mean": 6.6,
+      "death_speed_std": 1.5297058540778357,
+      "death_speed_max": 9.0,
+      "death_obstacle_counts": {
+        "CACTUS": 13,
+        "PTERA": 7
+      },
+      "entropy_mean": 0.013842176295425428,
+      "entropy_std": 0.0033023849618185708,
+      "value_mean": 12.645780886781415,
+      "value_std": 0.1459509225203689
+    },
+    "episodes": [
+      {
+        "score": 393,
+        "return": 115.03000000000068,
+        "steps": 689,
+        "obstacle_passes": 31,
+        "action_counts": [
+          647,
+          31,
+          11
+        ],
+        "mean_entropy": 0.012212208840672284,
+        "mean_value": 12.628591378299175,
+        "death_speed": 7.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 100,
+        "return": 18.999999999999936,
+        "steps": 176,
+        "obstacle_passes": 5,
+        "action_counts": [
+          170,
+          6,
+          0
+        ],
+        "mean_entropy": 0.00680586517328989,
+        "mean_value": 12.546150819821792,
+        "death_speed": 5.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 48,
+        "return": 3.5099999999999945,
+        "steps": 85,
+        "obstacle_passes": 2,
+        "action_counts": [
+          82,
+          3,
+          0
+        ],
+        "mean_entropy": 0.0075030917700346705,
+        "mean_value": 12.351229903277229,
+        "death_speed": 4.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 181,
+        "return": 43.389999999999816,
+        "steps": 318,
+        "obstacle_passes": 10,
+        "action_counts": [
+          307,
+          11,
+          0
+        ],
+        "mean_entropy": 0.011396974239320035,
+        "mean_value": 12.640642128650498,
+        "death_speed": 5.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 400,
+        "return": 118.75000000000077,
+        "steps": 701,
+        "obstacle_passes": 33,
+        "action_counts": [
+          648,
+          31,
+          22
+        ],
+        "mean_entropy": 0.015112747334596822,
+        "mean_value": 12.585800747728552,
+        "death_speed": 8.0,
+        "death_obstacle": "PTERA"
+      },
+      {
+        "score": 492,
+        "return": 150.77000000000209,
+        "steps": 863,
+        "obstacle_passes": 43,
+        "action_counts": [
+          814,
+          43,
+          6
+        ],
+        "mean_entropy": 0.016613293066538415,
+        "mean_value": 12.738824238782685,
+        "death_speed": 8.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 510,
+        "return": 156.0400000000022,
+        "steps": 894,
+        "obstacle_passes": 44,
+        "action_counts": [
+          840,
+          44,
+          10
+        ],
+        "mean_entropy": 0.01568844042974489,
+        "mean_value": 12.76806871736343,
+        "death_speed": 9.0,
+        "death_obstacle": "PTERA"
+      },
+      {
+        "score": 342,
+        "return": 101.93000000000046,
+        "steps": 601,
+        "obstacle_passes": 30,
+        "action_counts": [
+          545,
+          28,
+          28
+        ],
+        "mean_entropy": 0.01785636606507164,
+        "mean_value": 12.733415329912537,
+        "death_speed": 7.0,
+        "death_obstacle": "PTERA"
+      },
+      {
+        "score": 461,
+        "return": 140.25000000000162,
+        "steps": 807,
+        "obstacle_passes": 40,
+        "action_counts": [
+          759,
+          39,
+          9
+        ],
+        "mean_entropy": 0.013619715067894705,
+        "mean_value": 12.713292599315242,
+        "death_speed": 8.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 507,
+        "return": 154.29000000000224,
+        "steps": 888,
+        "obstacle_passes": 43,
+        "action_counts": [
+          824,
+          41,
+          23
+        ],
+        "mean_entropy": 0.015690209465102835,
+        "mean_value": 12.789942893896017,
+        "death_speed": 9.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 322,
+        "return": 91.16000000000032,
+        "steps": 566,
+        "obstacle_passes": 24,
+        "action_counts": [
+          542,
+          24,
+          0
+        ],
+        "mean_entropy": 0.012870506314051736,
+        "mean_value": 12.778487775014062,
+        "death_speed": 7.0,
+        "death_obstacle": "PTERA"
+      },
+      {
+        "score": 64,
+        "return": 8.419999999999984,
+        "steps": 114,
+        "obstacle_passes": 3,
+        "action_counts": [
+          110,
+          4,
+          0
+        ],
+        "mean_entropy": 0.007145968449222302,
+        "mean_value": 12.413884204730653,
+        "death_speed": 4.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 347,
+        "return": 102.04000000000049,
+        "steps": 608,
+        "obstacle_passes": 29,
+        "action_counts": [
+          570,
+          28,
+          10
+        ],
+        "mean_entropy": 0.015478688570079899,
+        "mean_value": 12.744308256789258,
+        "death_speed": 7.0,
+        "death_obstacle": "PTERA"
+      },
+      {
+        "score": 129,
+        "return": 26.939999999999888,
+        "steps": 227,
+        "obstacle_passes": 6,
+        "action_counts": [
+          214,
+          6,
+          7
+        ],
+        "mean_entropy": 0.014843532096041086,
+        "mean_value": 12.544022221922349,
+        "death_speed": 5.0,
+        "death_obstacle": "PTERA"
+      },
+      {
+        "score": 300,
+        "return": 82.81000000000026,
+        "steps": 526,
+        "obstacle_passes": 21,
+        "action_counts": [
+          503,
+          23,
+          0
+        ],
+        "mean_entropy": 0.015375819952832933,
+        "mean_value": 12.637511271487623,
+        "death_speed": 7.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 384,
+        "return": 112.92000000000067,
+        "steps": 673,
+        "obstacle_passes": 31,
+        "action_counts": [
+          607,
+          28,
+          38
+        ],
+        "mean_entropy": 0.015068928174952295,
+        "mean_value": 12.830410643459961,
+        "death_speed": 7.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 419,
+        "return": 127.30000000000103,
+        "steps": 735,
+        "obstacle_passes": 37,
+        "action_counts": [
+          674,
+          36,
+          25
+        ],
+        "mean_entropy": 0.018160854969781114,
+        "mean_value": 12.593251052519092,
+        "death_speed": 8.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 142,
+        "return": 32.059999999999874,
+        "steps": 250,
+        "obstacle_passes": 8,
+        "action_counts": [
+          242,
+          8,
+          0
+        ],
+        "mean_entropy": 0.012735166032747656,
+        "mean_value": 12.7295844039917,
+        "death_speed": 5.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 172,
+        "return": 43.17999999999983,
+        "steps": 302,
+        "obstacle_passes": 12,
+        "action_counts": [
+          288,
+          14,
+          0
+        ],
+        "mean_entropy": 0.015357113385015515,
+        "mean_value": 12.325975830191808,
+        "death_speed": 5.0,
+        "death_obstacle": "CACTUS"
+      },
+      {
+        "score": 383,
+        "return": 112.71000000000066,
+        "steps": 672,
+        "obstacle_passes": 31,
+        "action_counts": [
+          623,
+          29,
+          20
+        ],
+        "mean_entropy": 0.017308036511517837,
+        "mean_value": 12.822223318474633,
+        "death_speed": 7.0,
+        "death_obstacle": "PTERA"
+      }
+    ]
+  }
+}

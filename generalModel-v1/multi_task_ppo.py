@@ -1,4 +1,3 @@
-"""Multi-task PPO with task-specific encoders, shared backbone, and split actor/critic heads."""
 
 from typing import List
 
@@ -12,7 +11,6 @@ TASK_MINIGRID = "minigrid"
 TASK_DINO = "dino"
 VALID_TASKS = (TASK_MINIGRID, TASK_DINO)
 
-# MiniGrid one-hot grid layout (must match envs/minigrid_env.py).
 MINIGRID_VIEW = 7
 MINIGRID_CHANNELS = 20
 
@@ -26,13 +24,6 @@ def _ortho(layer: nn.Module, gain: float = np.sqrt(2)) -> nn.Module:
 
 
 class MinigridCNNEncoder(nn.Module):
-    """
-    Small CNN over the 7×7×20 one-hot grid → shared_dim embedding.
-
-    The flat input vector (length view·view·channels) is reshaped back to
-    (C, H, W) so spatial structure (where the key/door/goal sit relative to the
-    agent) is preserved, instead of being destroyed by a flat Linear layer.
-    """
 
     def __init__(
         self,
@@ -58,19 +49,11 @@ class MinigridCNNEncoder(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         b = x.shape[0]
-        # flat (B, H*W*C) → (B, H, W, C) → (B, C, H, W)
         grid = x.reshape(b, self.view, self.view, self.channels).permute(0, 3, 1, 2)
         return self.fc(self.conv(grid).reshape(b, -1))
 
 
 class MultiTaskActorCritic(nn.Module):
-    """
-    Task-routed actor-critic network.
-
-    Each task has an isolated encoder and actor/critic blocks. A shared backbone
-    sits between encoders and heads so representation can transfer without mixing
-    action or value gradients across incompatible action spaces.
-    """
 
     def __init__(
         self,
@@ -85,7 +68,6 @@ class MultiTaskActorCritic(nn.Module):
         self.minigrid_dim = minigrid_dim
         self.dino_dim = dino_dim
 
-        # MiniGrid obs is a 7×7×20 one-hot grid: use a CNN, not a flat Linear.
         self.minigrid_encoder = MinigridCNNEncoder(out_dim=shared_dim)
         self.dino_encoder = nn.Sequential(
             nn.Linear(dino_dim, shared_dim),
@@ -120,8 +102,6 @@ class MultiTaskActorCritic(nn.Module):
             nn.Linear(head_hidden, 1),
         )
 
-        # PPO-standard init: hidden layers gain √2, policy logits tiny (0.01) so
-        # the initial action distribution is near-uniform, value head gain 1.
         for actor in (self.minigrid_actor, self.dino_actor):
             _ortho(actor[0])
             _ortho(actor[-1], gain=0.01)
@@ -267,13 +247,6 @@ class MultiTaskPPO:
         bc_coef: float = 0.0,
         bc_weight: torch.Tensor | None = None,
     ):
-        """On-policy PPO update for a single task. Never sum losses across tasks.
-
-        If ``bc_obs``/``bc_actions`` are given (expert demonstrations), an auxiliary
-        class-weighted cross-entropy anchor is added to each minibatch loss. This
-        keeps an RL-fine-tuned policy from drifting away from a reliable behavior-
-        cloned prior (e.g. forgetting how to jump cacti) while still improving.
-        """
         if task_name not in VALID_TASKS:
             raise ValueError(f"Invalid task parameter: {task_name}")
         if len(buf) == 0:

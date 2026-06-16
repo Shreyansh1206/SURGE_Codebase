@@ -1,14 +1,3 @@
-"""
-Fast headless parallel training — multiple MiniGrid + Dino instances, no windows.
-
-Usage:
-    python train_parallel.py
-    python train_parallel.py --updates 500
-    python train_parallel.py --n-dino-envs 8 --n-minigrid-envs 16
-
-Equivalent to:
-    python train.py --parallel --n-minigrid-envs 8 --n-dino-envs 4 ...
-"""
 
 from __future__ import annotations
 

@@ -1,25 +1,3 @@
-"""
-Curriculum trainer for MiniGrid DoorKey — the standard way to crack 16x16.
-
-DoorKey-16x16 is a sparse-reward exploration wall: a from-scratch PPO agent
-almost never stumbles onto the goal, so it gets no learning signal (see the
-flatlined `checkpoints_v3_updated_rewards_mg` run). Instead we ramp difficulty:
-
-    5x5 -> 6x6 -> 8x8 -> 10x10 -> 12x12 -> 14x14 -> 16x16
-
-The agent's view is ALWAYS 7x7, so the network (one-hot CNN encoder) is identical
-at every size and weights transfer with zero surgery. Each stage starts from a
-policy that already knows "pick up key, open door, reach goal" on a smaller map
-and only has to scale that skill up.
-
-A stage is cleared once the agent reliably solves it (solve-rate EMA >= threshold),
-then we carry the weights forward. This is MiniGrid-only — no Dino.
-
-Usage:
-    python train_minigrid_curriculum.py
-    python train_minigrid_curriculum.py --stages 8,10,12,14,16 --rollout 256
-    python train_minigrid_curriculum.py --resume checkpoints_curriculum/latest.pt
-"""
 
 from __future__ import annotations
 
@@ -36,17 +14,14 @@ from envs.minigrid_env import make_minigrid_env, minigrid_obs_dim
 from multi_task_ppo import TASK_MINIGRID, MultiTaskPPO, RolloutBuffer
 from train import collect_rollout
 
-DINO_OBS_DIM = 48  # unused head; kept so the shared network shape is stable
+DINO_OBS_DIM = 48
 DINO_N_ACTIONS = 3
 
 DEFAULT_STAGES = (5, 6, 8, 10, 12, 14, 16)
-# A run that clearly reached the goal scores well above the shaping-only ceiling
-# (key +0.25, door +0.35 => 0.6 max without the goal). 0.5 cleanly separates them.
 SOLVE_RETURN_THRESHOLD = 0.5
 
 
 def stage_max_steps(size: int) -> int:
-    """Tight episode cap: enough headroom to solve, short enough for frequent resets."""
     return max(80, 12 * size)
 
 
