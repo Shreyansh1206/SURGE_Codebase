@@ -17,6 +17,14 @@ GRAVITY = 0.6
 GROUND_Y = int(0.98 * HEIGHT)
 DINO_X = WIDTH / 15.0
 
+# Spawn-spacing guards: prevent "bird then immediate cactus" patterns that are
+# effectively unwinnable due to limited reaction time during jump physics.
+_BIRD_DUCK_CENTERY = 100.0  # matches the expert heuristic threshold
+_JUMP_AIR_SAFETY_FRAMES = 5
+# If the bird is low enough to be ducked, allow a smaller (but still non-zero)
+# minimum spacing vs the next cactus.
+_DUCKABLE_BIRD_GAP_MULT = 0.55
+
 
 def _sprite_path(name: str) -> str:
     return os.path.join(SPRITE_DIR, name)
@@ -248,6 +256,60 @@ class DinoGameEngine:
             getattr(obs, "kind", ""),
         )
 
+    def _jump_frames_estimate(self) -> int:
+        """
+        Approx frames from takeoff until landing for the current jump physics.
+        Uses continuous-time estimate which is stable across episodes.
+        """
+        # For discrete integration this is approximate, so we add a safety term.
+        t = (2.0 * self.player.jumpSpeed) / GRAVITY
+        return int(np.ceil(t))
+
+    def _required_gap_px_jump(self) -> float:
+        """Minimum x-gap to have time to jump over a ground obstacle."""
+        air = self._jump_frames_estimate() + _JUMP_AIR_SAFETY_FRAMES
+        return float(self.gamespeed) * float(air)
+
+    def _required_gap_px_after_ptera(self, ptera: "Ptera") -> float:
+        """
+        Minimum x-gap between a bird (ptera) and the next obstacle behind it.
+        Low birds are assumed duckable, requiring a smaller gap than jumpable birds.
+        """
+        air = float(self._jump_frames_estimate()) + float(_JUMP_AIR_SAFETY_FRAMES)
+        duckable = float(ptera.rect.centery) <= _BIRD_DUCK_CENTERY
+        if duckable:
+            air = air * _DUCKABLE_BIRD_GAP_MULT
+        return float(self.gamespeed) * float(air)
+
+    def _gap_ok_pair(self, candidate, other) -> bool:
+        """
+        Check whether candidate could plausibly be handled after `other` given
+        current jump timing. We only validate the (candidate left) ahead of `other`
+        case, which holds for our spawn-at-right logic.
+        """
+        gap = float(candidate.rect.left) - float(other.rect.right)
+        if gap < 0:
+            return False
+
+        # Bird-to-cactus spacing depends on bird height (duck vs jump).
+        if isinstance(candidate, Cactus) and isinstance(other, Ptera):
+            return gap >= self._required_gap_px_after_ptera(other)
+        if isinstance(candidate, Ptera) and isinstance(other, Cactus):
+            return gap >= self._required_gap_px_after_ptera(candidate)
+
+        # Ground-to-ground spacing (cactus-cactus) uses jump timing.
+        return gap >= self._required_gap_px_jump()
+
+    def _gap_ok_candidate(self, candidate) -> bool:
+        """Validate the candidate against all currently-spawned obstacles."""
+        for c in self.cacti:
+            if not self._gap_ok_pair(candidate, c):
+                return False
+        for p in self.pteras:
+            if not self._gap_ok_pair(candidate, p):
+                return False
+        return True
+
     def get_state(self):
         o1, o2 = self._nearest_obstacles()
         o1_vals, o1_type = self._pack_obstacle(o1)
@@ -283,23 +345,26 @@ class DinoGameEngine:
             if len(self.cacti) == 0:
                 self.last_obstacle.empty()
                 cactus = Cactus(self.gamespeed, 40, 40)
-                self.cacti.add(cactus)
-                self.last_obstacle.add(cactus)
+                if self._gap_ok_candidate(cactus):
+                    self.cacti.add(cactus)
+                    self.last_obstacle.add(cactus)
             else:
                 for last in self.last_obstacle:
                     if last.rect.right < WIDTH * 0.7 and random.randrange(0, 50) == 10:
-                        self.last_obstacle.empty()
                         cactus = Cactus(self.gamespeed, 40, 40)
-                        self.cacti.add(cactus)
-                        self.last_obstacle.add(cactus)
+                        if self._gap_ok_candidate(cactus):
+                            self.last_obstacle.empty()
+                            self.cacti.add(cactus)
+                            self.last_obstacle.add(cactus)
 
         if len(self.pteras) == 0 and random.randrange(0, 200) == 10 and self.counter > 500:
             for last in self.last_obstacle:
                 if last.rect.right < WIDTH * 0.8:
-                    self.last_obstacle.empty()
                     ptera = Ptera(self.gamespeed, 46, 40)
-                    self.pteras.add(ptera)
-                    self.last_obstacle.add(ptera)
+                    if self._gap_ok_candidate(ptera):
+                        self.last_obstacle.empty()
+                        self.pteras.add(ptera)
+                        self.last_obstacle.add(ptera)
 
         if len(self.clouds) < 5 and random.randrange(0, 300) == 10:
             cloud = Cloud(WIDTH, random.randrange(HEIGHT // 5, HEIGHT // 2))

@@ -1,0 +1,11 @@
+{
+  "init_ckpt": "checkpoints_final/final.pt",
+  "started_at": "2026-06-16T11:10:14Z",
+  "update": 676,
+  "best_mean_score": 632.0,
+  "best_max_score": 703,
+  "last_mean_score": 375.5,
+  "last_max_score": 447,
+  "last_ckpt": "checkpoints_dino_finetune\\latest.pt",
+  "updated_at": "2026-06-16T12:06:47Z"
+}

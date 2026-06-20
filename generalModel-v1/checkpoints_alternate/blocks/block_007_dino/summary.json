@@ -1,0 +1,22 @@
+{
+  "block_index": 7,
+  "task": "dino",
+  "block_updates_target": 169,
+  "block_updates_done": 169,
+  "interrupted": false,
+  "finished_at": "2026-06-19T11:12:12Z",
+  "eval_wall_s": 8.987526416778564,
+  "mg_stage_idx": 7,
+  "mg_stage_size": null,
+  "eval": {
+    "task": "dino",
+    "n_episodes": 20,
+    "score_mean": 404.65,
+    "score_max": 802,
+    "score_min": 101,
+    "return_mean": 120.17900000000145,
+    "passes_per_episode": 33.35,
+    "entropy_mean": 0.2882827775379296,
+    "duck_frac": 0.35780721533258175
+  }
+}

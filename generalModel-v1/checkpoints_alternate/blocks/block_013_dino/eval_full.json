@@ -1,0 +1,355 @@
+{
+  "summary": {
+    "n_episodes": 20,
+    "wall_time_s": 3.006253719329834,
+    "score_mean": 47.4,
+    "score_std": 42.06827783496728,
+    "score_min": 20,
+    "score_max": 195,
+    "score_median": 37,
+    "score_p10": 20.0,
+    "score_p25": 20.0,
+    "score_p50": 37.0,
+    "score_p75": 48.0,
+    "score_p90": 82.00000000000006,
+    "score_p95": 121.85000000000005,
+    "score_p99": 180.3699999999999,
+    "return_mean": 3.1464999999999805,
+    "return_std": 13.126232237393896,
+    "return_min": -5.199999999999999,
+    "return_max": 49.6999999999998,
+    "return_p25": -5.199999999999999,
+    "return_p50": -0.08000000000000274,
+    "return_p75": 3.5399999999999947,
+    "return_p90": 13.090999999999978,
+    "steps_mean": 84.25,
+    "steps_std": 73.65655096459514,
+    "steps_min": 36,
+    "steps_max": 342,
+    "passes_per_episode": 1.75,
+    "passes_per_step": 0.020771513353115726,
+    "action_distribution": {
+      "noop": 0.9341246290801187,
+      "jump": 0.03086053412462908,
+      "duck": 0.035014836795252226
+    },
+    "action_counts": {
+      "noop": 1574,
+      "jump": 52,
+      "duck": 59
+    },
+    "death_speed_mean": 4.1,
+    "death_speed_std": 0.30000000000000004,
+    "death_speed_max": 5.0,
+    "death_obstacle_counts": {
+      "CACTUS": 18,
+      "PTERA": 2
+    },
+    "entropy_mean": 0.48988622891044165,
+    "entropy_std": 0.05457793181893845,
+    "value_mean": 8.159592640710947,
+    "value_std": 0.2817191993518118
+  },
+  "episodes": [
+    {
+      "score": 42,
+      "return": 1.1699999999999964,
+      "steps": 75,
+      "obstacle_passes": 1,
+      "action_counts": [
+        73,
+        1,
+        1
+      ],
+      "mean_entropy": 0.49838789880275725,
+      "mean_value": 8.257632172902426,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 44,
+      "return": 1.6299999999999955,
+      "steps": 79,
+      "obstacle_passes": 1,
+      "action_counts": [
+        75,
+        2,
+        2
+      ],
+      "mean_entropy": 0.5048532455782347,
+      "mean_value": 8.274177828921548,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5487274585498704,
+      "mean_value": 7.960557778676351,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5447231998874081,
+      "mean_value": 7.923529532220629,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 39,
+      "return": 0.4099999999999966,
+      "steps": 70,
+      "obstacle_passes": 1,
+      "action_counts": [
+        67,
+        2,
+        1
+      ],
+      "mean_entropy": 0.49832216118063244,
+      "mean_value": 8.226873193468366,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5250483705765672,
+      "mean_value": 7.832547558678521,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 57,
+      "return": 5.759999999999993,
+      "steps": 102,
+      "obstacle_passes": 2,
+      "action_counts": [
+        97,
+        3,
+        2
+      ],
+      "mean_entropy": 0.45779797076886775,
+      "mean_value": 8.295667017207426,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 118,
+      "return": 25.339999999999907,
+      "steps": 208,
+      "obstacle_passes": 7,
+      "action_counts": [
+        192,
+        8,
+        8
+      ],
+      "mean_entropy": 0.38781142261667323,
+      "mean_value": 8.647400707006454,
+      "death_speed": 5.0,
+      "death_obstacle": "PTERA"
+    },
+    {
+      "score": 71,
+      "return": 10.129999999999972,
+      "steps": 126,
+      "obstacle_passes": 3,
+      "action_counts": [
+        119,
+        3,
+        4
+      ],
+      "mean_entropy": 0.4357304061570811,
+      "mean_value": 8.453065928958711,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5454086119102107,
+      "mean_value": 7.949828823407491,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 35,
+      "return": -0.5700000000000021,
+      "steps": 62,
+      "obstacle_passes": 1,
+      "action_counts": [
+        59,
+        1,
+        2
+      ],
+      "mean_entropy": 0.4672671742737293,
+      "mean_value": 8.219449174019598,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5310557952357663,
+      "mean_value": 7.876249313354492,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5287590792609586,
+      "mean_value": 7.864455329047309,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 44,
+      "return": 1.6299999999999955,
+      "steps": 79,
+      "obstacle_passes": 1,
+      "action_counts": [
+        75,
+        2,
+        2
+      ],
+      "mean_entropy": 0.5068668436400497,
+      "mean_value": 8.28656960740874,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 45,
+      "return": 2.7999999999999954,
+      "steps": 80,
+      "obstacle_passes": 2,
+      "action_counts": [
+        74,
+        3,
+        3
+      ],
+      "mean_entropy": 0.38960073748603463,
+      "mean_value": 8.233236104249954,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 195,
+      "return": 49.6999999999998,
+      "steps": 342,
+      "obstacle_passes": 13,
+      "action_counts": [
+        306,
+        14,
+        22
+      ],
+      "mean_entropy": 0.3771546887920091,
+      "mean_value": 8.872046508287129,
+      "death_speed": 5.0,
+      "death_obstacle": "PTERA"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5297957861589061,
+      "mean_value": 7.868947188059489,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 78,
+      "return": 11.729999999999965,
+      "steps": 138,
+      "obstacle_passes": 3,
+      "action_counts": [
+        131,
+        4,
+        3
+      ],
+      "mean_entropy": 0.45024866770035116,
+      "mean_value": 8.366313747737719,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5322196040716436,
+      "mean_value": 7.880583431985643,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    },
+    {
+      "score": 20,
+      "return": -5.199999999999999,
+      "steps": 36,
+      "obstacle_passes": 0,
+      "action_counts": [
+        34,
+        1,
+        1
+      ],
+      "mean_entropy": 0.5379454555610815,
+      "mean_value": 7.902721868620978,
+      "death_speed": 4.0,
+      "death_obstacle": "CACTUS"
+    }
+  ]
+}
