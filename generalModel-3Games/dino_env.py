@@ -269,8 +269,9 @@ class MPVecDinoEnv:
 
 class VecDinoEnv:
 
-    def __init__(self, n_envs: int = 1, **env_kwargs):
+    def __init__(self, n_envs: int = 1, episode_end_pause: float = 0.0, **env_kwargs):
         self.n_envs = n_envs
+        self.episode_end_pause = episode_end_pause
         self.envs = [DinoEnv(env_id=i, **env_kwargs) for i in range(n_envs)]
 
     def reset(self):
@@ -286,7 +287,13 @@ class VecDinoEnv:
             infos.append(info)
         reset_idxs = [i for i, d in enumerate(dones) if d]
         for i in reset_idxs:
+            infos[i] = dict(infos[i])
             infos[i]["terminal_obs"] = obs[i]
+            pause = self.episode_end_pause if self.envs[i].render else 0.0
+            if pause > 0:
+                import time
+
+                time.sleep(pause)
             obs[i] = self.envs[i].reset()
         return (
             np.stack(obs, axis=0),

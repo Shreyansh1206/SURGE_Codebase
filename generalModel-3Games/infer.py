@@ -8,15 +8,15 @@ import time
 import numpy as np
 import torch
 
-from dino_env import FEATURES_PER_FRAME, N_ACTIONS as DINO_ACTIONS, OBS_DIM
 from envs.carracing_env import (
     CARRACING_ACTION_NAMES,
     CARRACING_N_ACTIONS,
     carracing_obs_shape,
     make_carracing_env,
 )
-from envs.dino_gym import DinoGymEnv
+from envs.dino_gym import DINO_N_ACTIONS, DINO_OBS_DIM, DinoGymEnv
 from envs.minigrid_env import MINIGRID_ACTIONS, make_minigrid_env, minigrid_obs_dim
+from dino_env import FEATURES_PER_FRAME
 from multi_task_ppo import (
     TASK_CARRACING,
     TASK_DINO,
@@ -32,6 +32,7 @@ def _resolve_ckpt(path: str) -> str:
     if os.path.exists(path):
         return path
     for alt in (
+        "checkpoints_3games/best.pt",
         "checkpoints_3games/latest.pt",
         "checkpoints/latest.pt",
     ):
@@ -46,14 +47,14 @@ def _resolve_ckpt(path: str) -> str:
 def _load_agent(ckpt_path: str, minigrid_env_id: str) -> MultiTaskPPO:
     ckpt = torch.load(ckpt_path, map_location="cpu")
     mg_dim = int(ckpt.get("minigrid_dim", minigrid_obs_dim(minigrid_env_id)))
-    dino_dim = int(ckpt.get("dino_dim", OBS_DIM))
+    dino_dim = int(ckpt.get("dino_dim", DINO_OBS_DIM))
     cr_shape = tuple(ckpt.get("carracing_obs_shape", carracing_obs_shape()))
     agent = MultiTaskPPO(
         minigrid_dim=mg_dim,
         dino_dim=dino_dim,
         carracing_obs_shape=cr_shape,
         minigrid_actions=MINIGRID_ACTIONS,
-        dino_actions=DINO_ACTIONS,
+        dino_actions=DINO_N_ACTIONS,
         carracing_actions=CARRACING_N_ACTIONS,
     )
     agent.load(ckpt_path, load_optim=False)
@@ -125,7 +126,7 @@ def run_dino(agent, episodes, render, sample, step_pause, trace):
             terminated = truncated = False
             ep_ret = 0.0
             steps = 0
-            action_counts = np.zeros(DINO_ACTIONS, dtype=np.int64)
+            action_counts = np.zeros(DINO_N_ACTIONS, dtype=np.int64)
             t0 = time.time()
             info = {}
             while not (terminated or truncated):
@@ -161,24 +162,38 @@ def run_dino(agent, episodes, render, sample, step_pause, trace):
     return scores
 
 
+def _obs_with_aux(obs, info):
+    """Flatten pixel obs and append aux features for CarRacing encoder."""
+    aux = info.get("aux", np.zeros(3, dtype=np.float32))
+    return np.concatenate([obs.ravel(), aux]).astype(np.float32)
+
+
 def run_carracing(agent, episodes, render, sample, step_pause):
     render_mode = "human" if render else None
-    env = make_carracing_env(render_mode=render_mode)
+    # Eval measures the TRUE native game: no reward clip, no shaping, and no
+    # off-track truncation (so spin-offs show up as real -100 deaths / very low
+    # episode returns rather than being cut short).
+    env = make_carracing_env(
+        render_mode=render_mode, reward_clip=0.0, slip_penalty=0.0,
+        offtrack_patience=0,
+    )
     returns, lengths = [], []
 
     print("\n=== CarRacing inference ===")
     try:
         for ep in range(1, episodes + 1):
-            obs, _ = env.reset()
+            obs, info = env.reset()
+            obs_flat = _obs_with_aux(obs, info)
             terminated = truncated = False
             ep_ret = 0.0
             steps = 0
             action_counts = np.zeros(CARRACING_N_ACTIONS, dtype=np.int64)
             t0 = time.time()
             while not (terminated or truncated):
-                action, value, probs = _select_action(agent, obs, TASK_CARRACING, sample)
+                action, value, probs = _select_action(agent, obs_flat, TASK_CARRACING, sample)
                 action_counts[action] += 1
                 obs, reward, terminated, truncated, info = env.step(action)
+                obs_flat = _obs_with_aux(obs, info)
                 ep_ret += float(reward)
                 steps += 1
                 if render and step_pause > 0:

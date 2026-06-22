@@ -62,11 +62,13 @@ class VecDinoGymEnv:
         n_envs: int = 1,
         render: bool = False,
         parallel: bool = False,
+        episode_end_pause: float = 0.0,
         **env_kwargs,
     ):
         self.n_envs = n_envs
         self.render = render
         self.renders_in_step = render
+        pause = episode_end_pause if render else 0.0
         if parallel:
             if render:
                 raise ValueError("parallel=True requires render=False (headless workers).")
@@ -74,8 +76,12 @@ class VecDinoGymEnv:
             self._vec = MPVecDinoEnv(n_envs=n_envs, frames_per_step=frames_per_step)
         else:
             if render:
-                env_kwargs = dict(env_kwargs, frames_per_step=1)
-            self._vec = VecDinoEnv(n_envs=n_envs, render=render, **env_kwargs)
+                env_kwargs = dict(env_kwargs, frames_per_step=1, render=True)
+            self._vec = VecDinoEnv(
+                n_envs=n_envs,
+                episode_end_pause=pause,
+                **env_kwargs,
+            )
         self.single_observation_space = spaces.Box(
             low=-np.inf, high=np.inf, shape=(OBS_DIM,), dtype=np.float32
         )

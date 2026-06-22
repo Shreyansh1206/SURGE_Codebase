@@ -16,7 +16,9 @@ MINIGRID_VIEW = 7
 MINIGRID_CHANNELS = 20
 
 CARRACING_OBS_SHAPE = (4, 96, 96)
-CARRACING_N_ACTIONS = 5
+# Fallback default; callers pass the real value from envs.carracing_env. The
+# discrete set now includes gas+steer combos (see CARRACING_DISCRETE_ACTIONS).
+CARRACING_N_ACTIONS = 9
 
 
 def _ortho(layer: nn.Module, gain: float = np.sqrt(2)) -> nn.Module:
@@ -57,15 +59,23 @@ class MinigridCNNEncoder(nn.Module):
         return self.fc(self.conv(grid).reshape(b, -1))
 
 
+CARRACING_AUX_DIM = 3  # speed, lateral slip, angular velocity
+
+
 class CarRacingCNNEncoder(nn.Module):
 
     def __init__(
         self,
         out_dim: int,
         obs_shape: Tuple[int, int, int] = CARRACING_OBS_SHAPE,
+        aux_dim: int = CARRACING_AUX_DIM,
     ):
         super().__init__()
         self.obs_shape = tuple(obs_shape)
+        self.aux_dim = aux_dim
+        self.n_pixels = 1
+        for d in self.obs_shape:
+            self.n_pixels *= d
         channels, height, width = self.obs_shape
         self.conv = nn.Sequential(
             _ortho(nn.Conv2d(channels, 32, kernel_size=8, stride=4)),
@@ -78,13 +88,24 @@ class CarRacingCNNEncoder(nn.Module):
         with torch.no_grad():
             dummy = torch.zeros(1, channels, height, width)
             n_flat = self.conv(dummy).reshape(1, -1).shape[1]
-        self.fc = nn.Sequential(_ortho(nn.Linear(n_flat, out_dim)), nn.Tanh())
+        self.fc = nn.Sequential(
+            _ortho(nn.Linear(n_flat + aux_dim, out_dim)), nn.Tanh()
+        )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         b = x.shape[0]
-        if x.dim() == 2:
-            x = x.reshape((b,) + self.obs_shape)
-        return self.fc(self.conv(x).reshape(b, -1))
+        total_flat = x.shape[1] if x.dim() == 2 else x.numel() // b
+        if total_flat > self.n_pixels:
+            pixels = x[:, :self.n_pixels].reshape((b,) + self.obs_shape)
+            aux = x[:, self.n_pixels:]
+        else:
+            if x.dim() == 2:
+                pixels = x.reshape((b,) + self.obs_shape)
+            else:
+                pixels = x
+            aux = torch.zeros(b, self.aux_dim, device=x.device)
+        conv_out = self.conv(pixels).reshape(b, -1)
+        return self.fc(torch.cat([conv_out, aux], dim=-1))
 
 
 class MultiTaskActorCritic(nn.Module):
@@ -417,6 +438,20 @@ class MultiTaskPPO:
 
     def load(self, path: str, load_optim: bool = True):
         ckpt = torch.load(path, map_location=self.device)
-        self.net.load_state_dict(ckpt["net"])
+        saved = ckpt["net"]
+        own = self.net.state_dict()
+        # Load only tensors whose shape matches, so we can change a single head
+        # (e.g. the CarRacing action head) without discarding everything else.
+        compatible = {
+            k: v for k, v in saved.items() if k in own and v.shape == own[k].shape
+        }
+        skipped = [k for k in saved if k not in compatible]
+        own.update(compatible)
+        self.net.load_state_dict(own)
+        if skipped:
+            print(f"[load] reinitialized {len(skipped)} mismatched tensors: {skipped}")
+            # Optimizer moments would be misaligned with reinitialized params, so
+            # start the optimizer fresh in that case.
+            load_optim = False
         if load_optim and "optim" in ckpt:
             self.optim.load_state_dict(ckpt["optim"])
