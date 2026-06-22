@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(Select-String -Path \"C:\\\\Users\\\\shilp\\\\Downloads\\\\surgeShit\\\\dinoGame\\\\t-rex-runner\\\\index.js\" -Pattern \"typeConfig|xPos|yPos|horizon\\\\.obstacles\" | Select-Object -First 15 | ForEach-Object { $_.LineNumber.ToString\\(\\) + \": \" + $_.Line.Trim\\(\\) })"
-    ]
-  }
-}
